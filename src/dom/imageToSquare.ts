@@ -1,0 +1,21 @@
+import { createCanvas, createCanvasFromMedia } from './createCanvas';
+import { getContext2dOrThrow } from './getContext2dOrThrow';
+import { getMediaDimensions } from './getMediaDimensions';
+
+export function imageToSquare(input: HTMLImageElement | HTMLCanvasElement, inputSize: number) {
+
+  if (!(input instanceof HTMLImageElement || input instanceof HTMLCanvasElement)) {
+    throw new Error('imageToSquare - expected arg0 to be HTMLImageElement | HTMLCanvasElement')
+  }
+
+  const dims = getMediaDimensions(input)
+  const scale = inputSize / Math.max(dims.height, dims.width)
+  const width = scale * dims.width
+  const height = scale * dims.height
+
+  const targetCanvas = createCanvas({ width: inputSize, height: inputSize })
+  const inputCanvas = input instanceof HTMLCanvasElement ? input : createCanvasFromMedia(input)
+  getContext2dOrThrow(targetCanvas).drawImage(inputCanvas, 0, 0, width, height)
+
+  return targetCanvas
+}

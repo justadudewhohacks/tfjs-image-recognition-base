@@ -1,0 +1,29 @@
+{
+  "name": "tfjs-image-recognition-base",
+  "version": "0.0.0",
+  "description": "A shared codebase for face-api.js and tfjs-tiny-yolo-v2.",
+  "main": "./build/index.js",
+  "typings": "./build/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "karma start"
+  },
+  "author": "justadudewhohacks",
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow/tfjs-core": "^0.12.14"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.8.8",
+    "@types/node": "^10.1.1",
+    "babel-preset-env": "^1.7.0",
+    "jasmine-core": "^3.1.0",
+    "karma": "^2.0.3",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.2",
+    "karma-typescript": "^3.0.12",
+    "karma-typescript-es6-transform": "^1.0.4",
+    "tslib": "^1.9.3",
+    "typescript": "^2.9.2"
+  }
+}
