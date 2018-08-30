@@ -52,3 +52,7 @@ export function getCenterPoint(pts: Point[]): Point {
   return pts.reduce((sum, pt) => sum.add(pt), new Point(0, 0))
     .div(new Point(pts.length, pts.length))
 }
+
+export function range(num: number, start: number, step: number): number[] {
+  return Array(num).fill(0).map((_, i) => start + (i * step))
+}
