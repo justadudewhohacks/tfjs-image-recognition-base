@@ -10,10 +10,10 @@ describe('assignFalseAndTruePositives', () => {
 
       const gt = [
         new Rect(0, 0, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(0, 0, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(1)
@@ -25,10 +25,10 @@ describe('assignFalseAndTruePositives', () => {
 
       const gt = [
         new Rect(0, 0, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(1, 1, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(1)
@@ -40,10 +40,10 @@ describe('assignFalseAndTruePositives', () => {
 
       const gt = [
         new Rect(0, 0, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(10, 10, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(0)
@@ -55,10 +55,10 @@ describe('assignFalseAndTruePositives', () => {
 
       const gt = [
         new Rect(0, 0, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(9, 9, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(0)
@@ -71,7 +71,7 @@ describe('assignFalseAndTruePositives', () => {
       const gt: BoundingBox[] = []
       const det = [
         new Rect(0, 0, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(0)
@@ -83,7 +83,7 @@ describe('assignFalseAndTruePositives', () => {
 
       const gt = [
         new Rect(0, 0, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det: BoundingBox[] = []
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
@@ -107,13 +107,13 @@ describe('assignFalseAndTruePositives', () => {
 
       const gt = [
         new Rect(0, 0, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(2, 2, 10, 10),
         new Rect(4, 4, 10, 10),
         new Rect(1, 1, 10, 10),
         new Rect(3, 3, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(1)
@@ -131,11 +131,11 @@ describe('assignFalseAndTruePositives', () => {
       const gt = [
         new Rect(0, 0, 10, 10),
         new Rect(10, 10, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(0, 0, 10, 10),
         new Rect(10, 10, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(2)
@@ -148,11 +148,11 @@ describe('assignFalseAndTruePositives', () => {
       const gt = [
         new Rect(0, 0, 10, 10),
         new Rect(10, 10, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(1, 1, 10, 10),
         new Rect(11, 11, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(2)
@@ -165,11 +165,11 @@ describe('assignFalseAndTruePositives', () => {
       const gt = [
         new Rect(0, 0, 10, 10),
         new Rect(10, 10, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(20, 20, 10, 10),
         new Rect(30, 30, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(0)
@@ -182,13 +182,13 @@ describe('assignFalseAndTruePositives', () => {
       const gt = [
         new Rect(0, 0, 10, 10),
         new Rect(10, 10, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(0, 0, 10, 10),
         new Rect(10, 10, 10, 10),
         new Rect(20, 20, 10, 10),
         new Rect(30, 30, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(2)
@@ -201,11 +201,11 @@ describe('assignFalseAndTruePositives', () => {
       const gt = [
         new Rect(0, 0, 10, 10),
         new Rect(2, 2, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
       const det = [
         new Rect(0, 0, 10, 10),
         new Rect(1, 1, 10, 10)
-      ].map(rect => rect.toBoundingBox())
+      ]
 
       const { truePositives, falsePositives } = assignFalseAndTruePositives(gt, det, 0.5)
       expect(truePositives.length).toEqual(2)

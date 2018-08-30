@@ -1,8 +1,8 @@
-import { BoundingBox } from '../classes/BoundingBox';
+import { Box } from '../classes/Box';
 import { iou } from './iou';
 
 export function nonMaxSuppression(
-  boxes: BoundingBox[],
+  boxes: Box[],
   scores: number[],
   iouThreshold: number,
   isIOU: boolean = true

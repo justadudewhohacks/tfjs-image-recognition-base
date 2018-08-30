@@ -56,3 +56,7 @@ export function getCenterPoint(pts: Point[]): Point {
 export function range(num: number, start: number, step: number): number[] {
   return Array(num).fill(0).map((_, i) => start + (i * step))
 }
+
+export function isValidNumber(num: any) {
+  return typeof num === 'number' && (num === 0 || !!num)
+}

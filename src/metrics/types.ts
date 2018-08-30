@@ -1,6 +1,12 @@
-import { BoundingBox } from '../classes/BoundingBox';
+import { Box } from '../classes/Box';
+import { LabeledBox } from '../classes/LabeledBox';
 
 export type GroundTruthsAndPredictions = {
-  groundTruth: BoundingBox[]
-  predictions: BoundingBox[]
+  groundTruth: LabeledBox[]
+  predictions: LabeledBox[]
+}
+
+export type GroundTruthAndPredictionBoxes = {
+  groundTruth: Box[]
+  predictions: Box[]
 }

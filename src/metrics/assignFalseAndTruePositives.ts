@@ -1,4 +1,4 @@
-import { BoundingBox } from '../classes/BoundingBox';
+import { Box } from '../classes/Box';
 import { iou } from '../ops/iou';
 
 /**
@@ -10,8 +10,8 @@ import { iou } from '../ops/iou';
  * @returns AP
  */
 export function assignFalseAndTruePositives(
-  groundTruth: BoundingBox[],
-  predictions: BoundingBox[],
+  groundTruth: Box<any>[],
+  predictions: Box<any>[],
   iouThreshold: number
 ) {
   // sort descending by iou to ensure predicted box with highest iou
@@ -19,8 +19,8 @@ export function assignFalseAndTruePositives(
   const sortedIouPairs = createSortedIouPairs(groundTruth, predictions)
     .filter(pair => pair.iou > iouThreshold)
 
-  const assignedGtBoxes = new Set<BoundingBox>()
-  const assignedPredBoxes = new Set<BoundingBox>()
+  const assignedGtBoxes = new Set<Box>()
+  const assignedPredBoxes = new Set<Box>()
 
   sortedIouPairs.forEach(({ gt, pred }) => {
     if (assignedGtBoxes.has(gt) || assignedPredBoxes.has(pred)) {
@@ -36,7 +36,7 @@ export function assignFalseAndTruePositives(
   return { truePositives, falsePositives }
 }
 
-export function createSortedIouPairs(groundTruth: BoundingBox[], predictions: BoundingBox[]) {
+export function createSortedIouPairs(groundTruth: Box[], predictions: Box[]) {
   return predictions.map(pred => groundTruth.map(gt => ({
     pred,
     gt,

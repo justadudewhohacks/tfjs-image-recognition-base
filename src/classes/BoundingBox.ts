@@ -1,66 +1,15 @@
-import { isDimensions } from '../utils';
-import { Rect } from './Rect';
-import { Dimensions } from './types';
+import { Box } from './Box';
 
-export class BoundingBox {
-  constructor(
-    private _left: number,
-    private _top: number,
-    private _right: number,
-    private _bottom: number
-  ) {}
+export interface IBoundingBox {
+  left: number
+  top: number
+  right: number
+  bottom: number
+}
 
-
-  public get left() : number {
-    return this._left
-  }
-
-  public get top() : number {
-    return this._top
-  }
-
-  public get right() : number {
-    return this._right
-  }
-
-  public get bottom() : number {
-    return this._bottom
-  }
-
-  public get width() : number {
-    return this.right - this.left
-  }
-
-  public get height() : number {
-    return this.bottom - this.top
-  }
-
-  public get area() : number {
-    return this.width * this.height
-  }
-
-  public toSquare(): BoundingBox {
-    let { left, top, right, bottom } = this
-
-    const off = (Math.abs(this.width - this.height) / 2)
-    if (this.width < this.height) {
-      left -= off
-      right += off
-    }
-    if (this.height < this.width) {
-      top -= off
-      bottom += off
-    }
-    return new BoundingBox(left, top, right, bottom)
-  }
-
-  public round(): BoundingBox {
-    return new BoundingBox(
-      Math.round(this.left),
-      Math.round(this.top),
-      Math.round(this.right),
-      Math.round(this.bottom)
-    )
+export class BoundingBox extends Box<BoundingBox> implements IBoundingBox {
+  constructor(left: number, top: number, right: number, bottom: number) {
+    super({ left, top, right, bottom })
   }
 
   public padAtBorders(imageHeight: number, imageWidth: number) {
@@ -104,15 +53,5 @@ export class BoundingBox {
       this.right + (region.right * this.width),
       this.bottom + (region.bottom * this.height)
     ).toSquare().round()
-  }
-
-  public rescale(s: Dimensions | number) {
-    const scaleX = isDimensions(s) ? (s as Dimensions).width : s as number
-    const scaleY = isDimensions(s) ? (s as Dimensions).height : s as number
-    return new BoundingBox(this.left * scaleX, this.top * scaleY, this.right * scaleX, this.bottom * scaleY)
-  }
-
-  public toRect(): Rect {
-    return new Rect(this.left, this.top, this.width, this.height)
   }
 }

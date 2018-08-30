@@ -1,6 +1,6 @@
 import { range } from '../utils';
 import { assignFalseAndTruePositives } from './assignFalseAndTruePositives';
-import { GroundTruthsAndPredictions } from './types';
+import { GroundTruthAndPredictionBoxes } from './types';
 
 /**
  * Calculates the average precision (AP) over 11 recall levels between [0, 1].
@@ -9,7 +9,7 @@ import { GroundTruthsAndPredictions } from './types';
  * @param iouThreshold IOU threshold at which a predicted box is considered to be a true positive.
  * @returns AP
  */
-export function averagePrecision(inputs: GroundTruthsAndPredictions[], iouThreshold: number): number {
+export function averagePrecision(inputs: GroundTruthAndPredictionBoxes[], iouThreshold: number): number {
 
   const precisionRecallPairs = inputs.map(input => {
     const {
