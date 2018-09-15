@@ -9,9 +9,9 @@ import { iou } from '../ops/iou';
  * @param iouThreshold IOU threshold at which a predicted box is considered to be a true positive.
  * @returns AP
  */
-export function assignFalseAndTruePositives(
-  groundTruth: Box<any>[],
-  predictions: Box<any>[],
+export function assignFalseAndTruePositives<T extends Box, S extends Box>(
+  groundTruth: T[],
+  predictions: S[],
   iouThreshold: number
 ) {
   // sort descending by iou to ensure predicted box with highest iou
@@ -19,8 +19,8 @@ export function assignFalseAndTruePositives(
   const sortedIouPairs = createSortedIouPairs(groundTruth, predictions)
     .filter(pair => pair.iou > iouThreshold)
 
-  const assignedGtBoxes = new Set<Box>()
-  const assignedPredBoxes = new Set<Box>()
+  const assignedGtBoxes = new Set<T>()
+  const assignedPredBoxes = new Set<S>()
 
   sortedIouPairs.forEach(({ gt, pred }) => {
     if (assignedGtBoxes.has(gt) || assignedPredBoxes.has(pred)) {
@@ -36,7 +36,7 @@ export function assignFalseAndTruePositives(
   return { truePositives, falsePositives }
 }
 
-export function createSortedIouPairs(groundTruth: Box[], predictions: Box[]) {
+export function createSortedIouPairs<T extends Box, S extends Box>(groundTruth: T[], predictions: S[]) {
   return predictions.map(pred => groundTruth.map(gt => ({
     pred,
     gt,

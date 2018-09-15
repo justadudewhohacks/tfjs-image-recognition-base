@@ -4,6 +4,21 @@ import { IRect } from './Rect';
 import { Dimensions } from './types';
 
 export class Box<BoxType = any> implements IBoundingBox, IRect {
+
+  public static isRect(rect: any): boolean {
+    return !!rect && [rect.x, rect.y, rect.width, rect.height].every(isValidNumber)
+  }
+
+  public static assertIsValidBox(box: any, callee: string) {
+    if (!Box.isRect(box)) {
+      throw new Error(`${callee} - invalid box: ${JSON.stringify(box)}, expected object with properties x, y, width, height`)
+    }
+
+    if (box.width < 0 || box.height < 0) {
+      throw new Error(`${callee} - width (${box.width}) and height (${box.height}) must be positive numbers`)
+    }
+  }
+
   private _x: number
   private _y: number
   private _width: number
@@ -16,16 +31,14 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
     const isRect = [box.x, box.y, box.width, box.height].every(isValidNumber)
 
     if (!isRect && !isBbox) {
-      throw new Error('new Box(box), expected box to be IBoundingBox | IRect')
+      throw new Error('Box.constructor - expected box to be IBoundingBox | IRect')
     }
 
     const [x, y, width, height] = isRect
       ? [box.x, box.y, box.width, box.height]
-      : [box.left, box.top, box.left + box.right,  box.top + box.bottom]
+      : [box.left, box.top, box.left + box.right, box.top + box.bottom]
 
-    if (width < 0 || height < 0) {
-      throw new Error('new Box(box), negative width or height is invalid')
-    }
+    Box.assertIsValidBox({ x, y, width, height }, 'Box.constructor')
 
     this._x = x
     this._y = y

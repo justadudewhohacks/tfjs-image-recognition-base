@@ -60,3 +60,7 @@ export function range(num: number, start: number, step: number): number[] {
 export function isValidNumber(num: any) {
   return typeof num === 'number' && (num === 0 || !!num)
 }
+
+export function isValidProbablitiy(num: any) {
+  return isValidNumber(num) && 0 <= num && num <= 1.0
+}

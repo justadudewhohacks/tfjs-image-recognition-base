@@ -1,4 +1,5 @@
 import { LabeledBox } from '../classes/LabeledBox';
+import { PredictedBox } from '../classes/PredictedBox';
 import { averagePrecision } from './averagePrecision';
 import { GroundTruthsAndPredictions } from './types';
 
@@ -9,7 +10,24 @@ import { GroundTruthsAndPredictions } from './types';
  * @param iouThreshold IOU threshold at which a predicted box is considered to be a true positive.
  * @returns mAP
  */
-export function meanAveragePrecision(inputs: GroundTruthsAndPredictions[], iouThreshold: number) {
+export function meanAveragePrecision(
+  inputs: GroundTruthsAndPredictions[],
+  iouThreshold: number = 0.5,
+  classScoreThreshold: number = 0.5
+) {
+
+  inputs.forEach(input => {
+    input.groundTruth.forEach(box => {
+      if (!(box instanceof LabeledBox)) {
+        throw new Error('meanAveragePrecision - expected ground truth boxes to be instanceof LabeledBox')
+      }
+    })
+    input.predictions.forEach(box => {
+      if (!(box instanceof PredictedBox)) {
+        throw new Error('meanAveragePrecision - expected predicted boxes to be instanceof PredictedBox')
+      }
+    })
+  })
 
   const unique = (arr: number[]) => Array.from(new Set<number>(arr).values())
 
@@ -22,19 +40,22 @@ export function meanAveragePrecision(inputs: GroundTruthsAndPredictions[], iouTh
       .reduce((flat, arr) => flat.concat(arr), [])
   )
 
-  const classLabelFilter = (classLabel: number) => (boxes: LabeledBox[]) =>
+  const classLabelFilter = (classLabel: number) => <T extends LabeledBox>(boxes: T[]) =>
     boxes.filter(box => box.label === classLabel)
+
+  const filterByClassConfidence = (boxes: PredictedBox[]) =>
+    boxes.filter(box => box.classScore >= classScoreThreshold)
 
   const inputsByClass = classLabels.map(classLabel => {
 
-    const filterByClass = classLabelFilter(classLabel)
-
+    const filterByClassLabel = classLabelFilter(classLabel)
+    classScoreThreshold
     return {
       classLabel,
       inputs: inputs.map(input => {
         return {
-          groundTruth: filterByClass(input.groundTruth),
-          predictions: filterByClass(input.predictions)
+          groundTruth: filterByClassLabel(input.groundTruth),
+          predictions: filterByClassConfidence(filterByClassLabel(input.predictions))
         }
       })
     }
@@ -43,13 +64,13 @@ export function meanAveragePrecision(inputs: GroundTruthsAndPredictions[], iouTh
   const averagePrecisionsByClass = inputsByClass.map(({ classLabel, inputs }) => {
     return {
       classLabel,
-      averagePrecision: averagePrecision(inputs, iouThreshold)
+      ...averagePrecision(inputs, iouThreshold)
     }
   })
 
   return {
     meanAveragePrec: averagePrecisionsByClass
-      .reduce((sum, { averagePrecision }) => sum + averagePrecision, 0) / classLabels.length,
+      .reduce((sum, { averagePrec }) => sum + averagePrec, 0) / classLabels.length,
     averagePrecisionsByClass
   }
 }
