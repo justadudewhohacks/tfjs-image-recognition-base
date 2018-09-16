@@ -1,5 +1,3 @@
-import * as tf from '@tensorflow/tfjs-core';
-
 import { isTensor3D, isTensor4D } from '../utils';
 import { awaitMediaLoaded } from './awaitMediaLoaded';
 import { isMediaElement } from './isMediaElement';
@@ -12,25 +10,11 @@ import { TNetInput } from './types';
  * to be finished loading.
  *
  * @param input The input, which can be a media element or an array of different media elements.
- * @param manageCreatedInput If a new NetInput instance is created from the inputs, this flag
- * determines, whether to set the NetInput as managed or not.
  * @returns A NetInput instance, which can be passed into one of the neural networks.
  */
-export async function toNetInput(
-  inputs: TNetInput,
-  manageCreatedInput: boolean = false,
-  keepCanvases: boolean = false
-): Promise<NetInput> {
+export async function toNetInput(inputs: TNetInput): Promise<NetInput> {
   if (inputs instanceof NetInput) {
     return inputs
-  }
-
-  const afterCreate = (netInput: NetInput) => manageCreatedInput
-    ? netInput.managed()
-    : netInput
-
-  if (isTensor4D(inputs)) {
-    return afterCreate(new NetInput(inputs as tf.Tensor4D))
   }
 
   let inputArgArray = Array.isArray(inputs)
@@ -69,5 +53,5 @@ export async function toNetInput(
     inputArray.map(input => isMediaElement(input) && awaitMediaLoaded(input))
   )
 
-  return afterCreate(new NetInput(inputArray, Array.isArray(inputs), keepCanvases))
+  return new NetInput(inputArray, Array.isArray(inputs))
 }

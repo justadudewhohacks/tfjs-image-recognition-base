@@ -9,12 +9,12 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
     return !!rect && [rect.x, rect.y, rect.width, rect.height].every(isValidNumber)
   }
 
-  public static assertIsValidBox(box: any, callee: string) {
+  public static assertIsValidBox(box: any, callee: string, allowNegativeDimensions: boolean = false) {
     if (!Box.isRect(box)) {
       throw new Error(`${callee} - invalid box: ${JSON.stringify(box)}, expected object with properties x, y, width, height`)
     }
 
-    if (box.width < 0 || box.height < 0) {
+    if (!allowNegativeDimensions && (box.width < 0 || box.height < 0)) {
       throw new Error(`${callee} - width (${box.width}) and height (${box.height}) must be positive numbers`)
     }
   }
@@ -24,21 +24,23 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
   private _width: number
   private _height: number
 
-  constructor(_box: IBoundingBox | IRect | any) {
+  // TODO: MTCNN boxes sometimes have negative widths or heights, figure out why and remove
+  // allowNegativeDimensions flag again
+  constructor(_box: IBoundingBox | IRect | any, allowNegativeDimensions: boolean = false) {
     const box = _box || {}
 
     const isBbox = [box.left, box.top, box.right, box.bottom].every(isValidNumber)
     const isRect = [box.x, box.y, box.width, box.height].every(isValidNumber)
 
     if (!isRect && !isBbox) {
-      throw new Error('Box.constructor - expected box to be IBoundingBox | IRect')
+      throw new Error(`Box.constructor - expected box to be IBoundingBox | IRect, instead have ${JSON.stringify(box)}`)
     }
 
     const [x, y, width, height] = isRect
       ? [box.x, box.y, box.width, box.height]
-      : [box.left, box.top, box.left + box.right, box.top + box.bottom]
+      : [box.left, box.top, box.right - box.left, box.bottom - box.top]
 
-    Box.assertIsValidBox({ x, y, width, height }, 'Box.constructor')
+    Box.assertIsValidBox({ x, y, width, height }, 'Box.constructor', allowNegativeDimensions)
 
     this._x = x
     this._y = y
@@ -113,10 +115,10 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
     const scaleX = isDimensions(s) ? (s as Dimensions).width : s as number
     const scaleY = isDimensions(s) ? (s as Dimensions).height : s as number
     return new Box({
-      x: this.left * scaleX,
-      y: this.top * scaleY,
-      width: this.right * scaleX,
-      height: this.bottom * scaleY
+      x: this.x * scaleX,
+      y: this.y * scaleY,
+      width: this.width * scaleX,
+      height: this.height * scaleY
     })
   }
 
@@ -141,5 +143,48 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
     const clippedHeight = Math.min(newHeight, imgHeight - clippedY)
 
     return (new Box({ x: clippedX, y: clippedY, width: clippedWidth, height: clippedHeight})).floor()
+  }
+
+  public padAtBorders(imageHeight: number, imageWidth: number) {
+    const w = this.width + 1
+    const h = this.height + 1
+
+    let dx = 1
+    let dy = 1
+    let edx = w
+    let edy = h
+
+    let x = this.left
+    let y = this.top
+    let ex = this.right
+    let ey = this.bottom
+
+    if (ex > imageWidth) {
+      edx = -ex + imageWidth + w
+      ex = imageWidth
+    }
+    if (ey > imageHeight) {
+      edy = -ey + imageHeight + h
+      ey = imageHeight
+    }
+    if (x < 1) {
+      edy = 2 - x
+      x = 1
+    }
+    if (y < 1) {
+      edy = 2 - y
+      y = 1
+    }
+
+    return { dy, edy, dx, edx, y, ey, x, ex, w, h }
+  }
+
+  public calibrate(region: Box) {
+    return new Box({
+      left: this.left + (region.left * this.width),
+      top: this.top + (region.top * this.height),
+      right: this.right + (region.right * this.width),
+      bottom: this.bottom + (region.bottom * this.height)
+    }).toSquare().round()
   }
 }

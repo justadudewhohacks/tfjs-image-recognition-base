@@ -7,19 +7,19 @@ export function isTensor(tensor: any, dim: number) {
   return tensor instanceof tf.Tensor && tensor.shape.length === dim
 }
 
-export function isTensor1D(tensor: any) {
+export function isTensor1D(tensor: any): tensor is tf.Tensor1D {
   return isTensor(tensor, 1)
 }
 
-export function isTensor2D(tensor: any) {
+export function isTensor2D(tensor: any): tensor is tf.Tensor2D {
   return isTensor(tensor, 2)
 }
 
-export function isTensor3D(tensor: any) {
+export function isTensor3D(tensor: any): tensor is tf.Tensor3D {
   return isTensor(tensor, 3)
 }
 
-export function isTensor4D(tensor: any) {
+export function isTensor4D(tensor: any): tensor is tf.Tensor4D {
   return isTensor(tensor, 4)
 }
 
@@ -58,7 +58,7 @@ export function range(num: number, start: number, step: number): number[] {
 }
 
 export function isValidNumber(num: any) {
-  return typeof num === 'number' && (num === 0 || !!num)
+  return !!num && num !== Infinity && num !== -Infinity && !isNaN(num) || num === 0
 }
 
 export function isValidProbablitiy(num: any) {

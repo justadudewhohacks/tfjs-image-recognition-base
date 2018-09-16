@@ -19,13 +19,13 @@ describe('toNetInput', () => {
   describe('valid args', () => {
 
     it('from HTMLImageElement', async () => {
-      const netInput = await toNetInput(imgEl, true)
+      const netInput = await toNetInput(imgEl)
       expect(netInput instanceof NetInput).toBe(true)
       expect(netInput.batchSize).toEqual(1)
     })
 
     it('from HTMLCanvasElement', async () => {
-      const netInput = await toNetInput(canvasEl, true)
+      const netInput = await toNetInput(canvasEl)
       expect(netInput instanceof NetInput).toBe(true)
       expect(netInput.batchSize).toEqual(1)
     })
@@ -34,7 +34,7 @@ describe('toNetInput', () => {
       const netInput = await toNetInput([
         imgEl,
         imgEl
-      ], true)
+      ])
       expect(netInput instanceof NetInput).toBe(true)
       expect(netInput.batchSize).toEqual(2)
     })
@@ -43,7 +43,7 @@ describe('toNetInput', () => {
       const netInput = await toNetInput([
         canvasEl,
         canvasEl
-      ], true)
+      ])
       expect(netInput instanceof NetInput).toBe(true)
       expect(netInput.batchSize).toEqual(2)
     })
@@ -53,7 +53,7 @@ describe('toNetInput', () => {
         imgEl,
         canvasEl,
         canvasEl
-      ], true)
+      ])
       expect(netInput instanceof NetInput).toBe(true)
       expect(netInput.batchSize).toEqual(3)
     })
@@ -95,63 +95,21 @@ describe('toNetInput', () => {
 
   describe('no memory leaks', () => {
 
-    it('single image element', async () => {
-      await expectAllTensorsReleased(async () => {
-        const netInput = await toNetInput(imgEl)
-        netInput.dispose()
-      })
-    })
-
-    it('multiple image elements', async () => {
-      await expectAllTensorsReleased(async () => {
-        const netInput = await toNetInput([imgEl, imgEl, imgEl])
-        netInput.dispose()
-      })
-    })
-
-    it('single tf.Tensor3D', async () => {
-      const tensor = tf.fromPixels(imgEl)
-
-      await expectAllTensorsReleased(async () => {
-        const netInput = await toNetInput(tensor)
-        netInput.dispose()
-      })
-
-      tensor.dispose()
-    })
-
-    it('multiple tf.Tensor3Ds', async () => {
+    it('constructor', async () => {
       const tensors = [imgEl, imgEl, imgEl].map(el => tf.fromPixels(el))
+      const tensor4ds = tensors.map(t => t.expandDims<tf.Rank.R4>())
 
       await expectAllTensorsReleased(async () => {
-        const netInput = await toNetInput(tensors)
-        netInput.dispose()
+        await toNetInput(imgEl)
+        await toNetInput([imgEl, imgEl, imgEl])
+        await toNetInput(tensors[0])
+        await toNetInput(tensors)
+        await toNetInput(tensor4ds[0])
+        await toNetInput(tensor4ds)
       })
 
       tensors.forEach(t => t.dispose())
-    })
-
-    it('single batch size 1 tf.Tensor4Ds', async () => {
-      const tensor = tf.tidy(() => tf.fromPixels(imgEl).expandDims()) as tf.Tensor4D
-
-      await expectAllTensorsReleased(async () => {
-        const netInput = await toNetInput(tensor)
-        netInput.dispose()
-      })
-
-      tensor.dispose()
-    })
-
-    it('multiple batch size 1 tf.Tensor4Ds', async () => {
-      const tensors = [imgEl, imgEl, imgEl]
-        .map(el => tf.tidy(() => tf.fromPixels(el).expandDims())) as tf.Tensor4D[]
-
-      await expectAllTensorsReleased(async () => {
-        const netInput = await toNetInput(tensors)
-        netInput.dispose()
-      })
-
-      tensors.forEach(t => t.dispose())
+      tensor4ds.forEach(t => t.dispose())
     })
 
   })

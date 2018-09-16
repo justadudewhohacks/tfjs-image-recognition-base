@@ -1,3 +1,5 @@
+import * as tf from '@tensorflow/tfjs-core';
+
 import { bufferToImage } from '../../src/dom/bufferToImage';
 import { NetInput } from '../../src/dom/NetInput';
 import { expectAllTensorsReleased, fakeTensor3d } from '../utils';
@@ -11,79 +13,70 @@ describe('NetInput', () => {
     imgEl = await bufferToImage(img)
   })
 
+  describe('toBatchTensor', () => {
+
+    it('HTMLImageElement, batchSize === 1', () => tf.tidy(() => {
+      const netInput = new NetInput([imgEl])
+      const batchTensor = netInput.toBatchTensor(100)
+      expect(batchTensor.shape).toEqual([1, 100, 100, 3])
+    }))
+
+    it('tf.Tensor3D, batchSize === 1', () => tf.tidy(() => {
+      const tensor = tf.zeros<tf.Rank.R3>([200, 200, 3], 'int32')
+      const netInput = new NetInput([tensor])
+      const batchTensor = netInput.toBatchTensor(100)
+      expect(batchTensor.shape).toEqual([1, 100, 100, 3])
+    }))
+
+    it('HTMLImageElements, batchSize === 4', () => tf.tidy(() => {
+      const netInput = new NetInput([imgEl, imgEl, imgEl, imgEl])
+      const batchTensor = netInput.toBatchTensor(100)
+      expect(batchTensor.shape).toEqual([4, 100, 100, 3])
+    }))
+
+    it('tf.Tensor3Ds, batchSize === 4', () => tf.tidy(() => {
+      const tensor = tf.zeros<tf.Rank.R3>([200, 200, 3], 'int32')
+      const netInput = new NetInput([tensor, tensor, tensor, tensor])
+      const batchTensor = netInput.toBatchTensor(100)
+      expect(batchTensor.shape).toEqual([4, 100, 100, 3])
+    }))
+
+    it('tf.Tensor3Ds and HTMLImageElements, batchSize === 4', () => tf.tidy(() => {
+      const tensor = tf.zeros<tf.Rank.R3>([200, 200, 3], 'int32')
+      const netInput = new NetInput([tensor, tensor, imgEl, imgEl])
+      const batchTensor = netInput.toBatchTensor(100)
+      expect(batchTensor.shape).toEqual([4, 100, 100, 3])
+    }))
+
+  })
+
   describe('no memory leaks', () => {
 
-    describe('constructor', () => {
+    it('constructor', async () => {
+      const tensors = [fakeTensor3d(), fakeTensor3d(), fakeTensor3d()]
 
-      it('single image element', async () => {
-        await expectAllTensorsReleased(() => {
-          const net = new NetInput([imgEl])
-          net.dispose()
-        })
+      await expectAllTensorsReleased(() => {
+        new NetInput([imgEl])
+        new NetInput([imgEl, imgEl, imgEl])
+        new NetInput([tensors[0]])
+        new NetInput(tensors)
       })
 
-      it('multiple image elements', async () => {
-        await expectAllTensorsReleased(() => {
-          const net = new NetInput([imgEl, imgEl, imgEl])
-          net.dispose()
-        })
-      })
-
-      it('single tf.Tensor3D', async () => {
-        const tensor = fakeTensor3d()
-
-        await expectAllTensorsReleased(() => {
-          const net = new NetInput([tensor])
-          net.dispose()
-        })
-
-        tensor.dispose()
-      })
-
-      it('multiple tf.Tensor3Ds', async () => {
-        const tensors = [fakeTensor3d(), fakeTensor3d(), fakeTensor3d()]
-
-        await expectAllTensorsReleased(() => {
-          const net = new NetInput(tensors)
-          net.dispose()
-        })
-
-        tensors.forEach(t => t.dispose())
-      })
+      tensors.forEach(t => t.dispose())
     })
 
     describe('toBatchTensor', () => {
 
       it('single image element', async () => {
         await expectAllTensorsReleased(() => {
-          const net = new NetInput([imgEl])
-          const batchTensor = net.toBatchTensor(100, false)
-          net.dispose()
+          const batchTensor = new NetInput([imgEl]).toBatchTensor(100, false)
           batchTensor.dispose()
         })
       })
 
       it('multiple image elements', async () => {
         await expectAllTensorsReleased(() => {
-          const net = new NetInput([imgEl, imgEl, imgEl])
-          const batchTensor = net.toBatchTensor(100, false)
-          net.dispose()
-          batchTensor.dispose()
-        })
-      })
-
-      it('managed, single image element', async () => {
-        await expectAllTensorsReleased(() => {
-          const net = (new NetInput([imgEl])).managed()
-          const batchTensor = net.toBatchTensor(100, false)
-          batchTensor.dispose()
-        })
-      })
-
-      it('managed, multiple image elements', async () => {
-        await expectAllTensorsReleased(() => {
-          const net = (new NetInput([imgEl, imgEl, imgEl])).managed()
-          const batchTensor = net.toBatchTensor(100, false)
+          const batchTensor = new NetInput([imgEl, imgEl, imgEl]).toBatchTensor(100, false)
           batchTensor.dispose()
         })
       })

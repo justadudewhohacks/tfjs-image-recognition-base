@@ -9,8 +9,8 @@ export async function expectAllTensorsReleased(fn: () => any) {
   expect(tf.memory().numTensors - numTensorsBefore).toEqual(0)
 }
 
-export function fakeTensor3d() {
-  return tf.tensor3d([[[0]]])
+export function fakeTensor3d(dtype: tf.DataType = 'int32') {
+  return tf.tensor3d([0], [1, 1, 1], dtype)
 }
 
 export function zeros(length: number): Float32Array {
