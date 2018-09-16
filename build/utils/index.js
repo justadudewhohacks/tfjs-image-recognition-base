@@ -41,4 +41,13 @@ export function getCenterPoint(pts) {
     return pts.reduce(function (sum, pt) { return sum.add(pt); }, new Point(0, 0))
         .div(new Point(pts.length, pts.length));
 }
+export function range(num, start, step) {
+    return Array(num).fill(0).map(function (_, i) { return start + (i * step); });
+}
+export function isValidNumber(num) {
+    return !!num && num !== Infinity && num !== -Infinity && !isNaN(num) || num === 0;
+}
+export function isValidProbablitiy(num) {
+    return isValidNumber(num) && 0 <= num && num <= 1.0;
+}
 //# sourceMappingURL=index.js.map

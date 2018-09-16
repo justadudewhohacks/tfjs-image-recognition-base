@@ -1,2 +1,2 @@
-import { BoundingBox } from '../classes/BoundingBox';
-export declare function iou(box1: BoundingBox, box2: BoundingBox, isIOU?: boolean): number;
+import { Box } from '../classes/Box';
+export declare function iou(box1: Box, box2: Box, isIOU?: boolean): number;

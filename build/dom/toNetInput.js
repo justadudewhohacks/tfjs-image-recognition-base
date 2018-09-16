@@ -9,26 +9,16 @@ import { resolveInput } from './resolveInput';
  * to be finished loading.
  *
  * @param input The input, which can be a media element or an array of different media elements.
- * @param manageCreatedInput If a new NetInput instance is created from the inputs, this flag
- * determines, whether to set the NetInput as managed or not.
  * @returns A NetInput instance, which can be passed into one of the neural networks.
  */
-export function toNetInput(inputs, manageCreatedInput, keepCanvases) {
-    if (manageCreatedInput === void 0) { manageCreatedInput = false; }
-    if (keepCanvases === void 0) { keepCanvases = false; }
+export function toNetInput(inputs) {
     return tslib_1.__awaiter(this, void 0, void 0, function () {
-        var afterCreate, inputArgArray, getIdxHint, inputArray;
+        var inputArgArray, getIdxHint, inputArray;
         return tslib_1.__generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (inputs instanceof NetInput) {
                         return [2 /*return*/, inputs];
-                    }
-                    afterCreate = function (netInput) { return manageCreatedInput
-                        ? netInput.managed()
-                        : netInput; };
-                    if (isTensor4D(inputs)) {
-                        return [2 /*return*/, afterCreate(new NetInput(inputs))];
                     }
                     inputArgArray = Array.isArray(inputs)
                         ? inputs
@@ -58,7 +48,7 @@ export function toNetInput(inputs, manageCreatedInput, keepCanvases) {
                 case 1:
                     // wait for all media elements being loaded
                     _a.sent();
-                    return [2 /*return*/, afterCreate(new NetInput(inputArray, Array.isArray(inputs), keepCanvases))];
+                    return [2 /*return*/, new NetInput(inputArray, Array.isArray(inputs))];
             }
         });
     });

@@ -1,37 +1,34 @@
 import * as tf from '@tensorflow/tfjs-core';
-import { Point } from '../classes/Point';
 import { Dimensions } from '../classes/types';
 import { TResolvedNetInput } from './types';
 export declare class NetInput {
-    private _inputs;
+    private _imageTensors;
     private _canvases;
-    private _isManaged;
-    private _isBatchInput;
+    private _batchSize;
+    private _treatAsBatchInput;
     private _inputDimensions;
-    private _paddings;
     private _inputSize;
-    constructor(inputs: tf.Tensor4D | Array<TResolvedNetInput>, isBatchInput?: boolean, keepCanvases?: boolean);
-    readonly inputs: tf.Tensor3D[];
+    constructor(inputs: Array<TResolvedNetInput>, treatAsBatchInput?: boolean);
+    readonly imageTensors: Array<tf.Tensor3D | tf.Tensor4D>;
     readonly canvases: HTMLCanvasElement[];
-    readonly isManaged: boolean;
     readonly isBatchInput: boolean;
     readonly batchSize: number;
     readonly inputDimensions: number[][];
-    readonly paddings: Point[];
-    readonly inputSize: number;
-    readonly relativePaddings: Point[];
+    readonly inputSize: number | undefined;
     readonly reshapedInputDimensions: Dimensions[];
+    getInput(batchIdx: number): tf.Tensor3D | tf.Tensor4D | HTMLCanvasElement;
     getInputDimensions(batchIdx: number): number[];
     getInputHeight(batchIdx: number): number;
     getInputWidth(batchIdx: number): number;
-    getPaddings(batchIdx: number): Point;
-    getRelativePaddings(batchIdx: number): Point;
     getReshapedInputDimensions(batchIdx: number): Dimensions;
-    toBatchTensor(inputSize: number, isCenterInputs?: boolean): tf.Tensor4D;
     /**
-     *  By setting the isManaged flag, all newly created tensors will be
-     *  automatically disposed after the batch tensor has been created
+     * Create a batch tensor from all input canvases and tensors
+     * with size [batchSize, inputSize, inputSize, 3].
+     *
+     * @param inputSize Height and width of the tensor.
+     * @param isCenterImage (optional, default: false) If true, add an equal amount of padding on
+     * both sides of the minor dimension oof the image.
+     * @returns The batch tensor.
      */
-    managed(): this;
-    dispose(): void;
+    toBatchTensor(inputSize: number, isCenterInputs?: boolean): tf.Tensor4D;
 }
