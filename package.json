@@ -6,7 +6,8 @@
   "typings": "./build/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "karma start"
+    "test": "karma start",
+    "test-travis": "set KARMA_BROWSERS=ChromeHeadlessNoSandbox&& karma start --single-run"
   },
   "author": "justadudewhohacks",
   "license": "MIT",
