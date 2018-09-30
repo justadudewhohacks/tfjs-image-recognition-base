@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/justadudewhohacks/tfjs-image-recognition-base.svg?branch=master)](https://travis-ci.org/justadudewhohacks/tfjs-image-recognition-base)
