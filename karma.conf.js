@@ -20,12 +20,7 @@ module.exports = function(config) {
       '**/*.ts': ['karma-typescript']
     },
     karmaTypescriptConfig: {
-      tsconfig: 'tsconfig.test.json',
-      bundlerOptions: {
-        transforms: [
-          require("karma-typescript-es6-transform")()
-        ]
-      }
+      tsconfig: 'tsconfig.test.json'
     },
     browsers: process.env.KARMA_BROWSERS
       ? process.env.KARMA_BROWSERS.split(',')
