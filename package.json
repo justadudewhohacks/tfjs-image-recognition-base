@@ -7,7 +7,7 @@
   "typings": "./build/commonjs/index.d.ts",
   "scripts": {
     "tsc": "tsc",
-    "tsc-es6": "tsc --p tsconfig-es6.json",
+    "tsc-es6": "tsc --p tsconfig.es6.json",
     "build": "npm run tsc && npm run tsc-es6",
     "test": "karma start",
     "test-travis": "set KARMA_BROWSERS=ChromeHeadlessNoSandbox&& karma start --single-run"
