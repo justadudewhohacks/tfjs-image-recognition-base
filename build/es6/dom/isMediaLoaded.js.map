@@ -1,0 +1,1 @@
+{"version":3,"file":"isMediaLoaded.js","sourceRoot":"","sources":["../../../src/dom/isMediaLoaded.ts"],"names":[],"mappings":"AAAA,MAAM,wBAAwB,KAA0C;IACtE,OAAO,CAAC,KAAK,YAAY,gBAAgB,IAAI,KAAK,CAAC,QAAQ,CAAC;WACvD,CAAC,KAAK,YAAY,gBAAgB,IAAI,KAAK,CAAC,UAAU,IAAI,CAAC,CAAC,CAAA;AACnE,CAAC"}

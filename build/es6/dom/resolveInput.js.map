@@ -1,0 +1,1 @@
+{"version":3,"file":"resolveInput.js","sourceRoot":"","sources":["../../../src/dom/resolveInput.ts"],"names":[],"mappings":"AAAA,MAAM,uBAAuB,GAAiB;IAC5C,IAAI,OAAO,GAAG,KAAK,QAAQ,EAAE;QAC3B,OAAO,QAAQ,CAAC,cAAc,CAAC,GAAG,CAAC,CAAA;KACpC;IACD,OAAO,GAAG,CAAA;AACZ,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"getContext2dOrThrow.js","sourceRoot":"","sources":["../../../src/dom/getContext2dOrThrow.ts"],"names":[],"mappings":"AAAA,MAAM,8BAA8B,MAAyB;IAC3D,IAAM,GAAG,GAAG,MAAM,CAAC,UAAU,CAAC,IAAI,CAAC,CAAA;IACnC,IAAI,CAAC,GAAG,EAAE;QACR,MAAM,IAAI,KAAK,CAAC,2BAA2B,CAAC,CAAA;KAC7C;IACD,OAAO,GAAG,CAAA;AACZ,CAAC"}
