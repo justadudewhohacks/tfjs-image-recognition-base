@@ -1,7 +1,7 @@
 import * as tf from '@tensorflow/tfjs-core';
 
+import { Dimensions, IDimensions } from '../classes/Dimensions';
 import { Point } from '../classes/Point';
-import { Dimensions } from '../classes/types';
 
 export function isTensor(tensor: any, dim: number) {
   return tensor instanceof tf.Tensor && tensor.shape.length === dim
@@ -40,12 +40,9 @@ export function isDimensions(obj: any): boolean {
   return obj && obj.width && obj.height
 }
 
-export function computeReshapedDimensions({ width, height }: Dimensions, inputSize: number) {
+export function computeReshapedDimensions({ width, height }: IDimensions, inputSize: number) {
   const scale = inputSize / Math.max(height, width)
-  return {
-    height: Math.round(height * scale),
-    width: Math.round(width * scale)
-  }
+  return new Dimensions(Math.round(width * scale), Math.round(height * scale))
 }
 
 export function getCenterPoint(pts: Point[]): Point {

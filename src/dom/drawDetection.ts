@@ -1,4 +1,7 @@
+import { BoxWithText } from '../classes/BoxWithText';
 import { ObjectDetection } from '../classes/ObjectDetection';
+import { PredictedBox } from '../classes/PredictedBox';
+import { Rect } from '../classes/Rect';
 import { round } from '../utils';
 import { drawBox } from './drawBox';
 import { drawText } from './drawText';
@@ -9,12 +12,12 @@ import { DrawDetectionOptions } from './types';
 
 export function drawDetection(
   canvasArg: string | HTMLCanvasElement,
-  detection: ObjectDetection | ObjectDetection[],
+  detection: Rect | PredictedBox | ObjectDetection | BoxWithText | Array<Rect | PredictedBox | ObjectDetection | BoxWithText>,
   options?: DrawDetectionOptions
 ) {
   const canvas = resolveInput(canvasArg)
   if (!(canvas instanceof HTMLCanvasElement)) {
-    throw new Error('drawBox - expected canvas to be of type: HTMLCanvasElement')
+    throw new Error('drawDetection - expected canvas to be of type: HTMLCanvasElement')
   }
 
   const detectionArray = Array.isArray(detection)
@@ -27,7 +30,7 @@ export function drawDetection(
       y,
       width,
       height
-    } = det.getBox()
+    } = det instanceof ObjectDetection ? det.box : det
 
     const drawOptions = getDefaultDrawOptions(options)
 
@@ -40,14 +43,20 @@ export function drawDetection(
       height,
       drawOptions
     )
-    if (drawOptions.withScore) {
-      drawText(
-        ctx,
-        x,
-        y,
-        `${det.className} (${round(det.score)})`,
-        drawOptions
+
+    const { withScore } = drawOptions
+    let text = det instanceof BoxWithText
+      ? det.text
+      : ((withScore && det instanceof PredictedBox)
+        ? `${round(det.score)}`
+        : (det instanceof ObjectDetection
+          ? `${det.className}${withScore ? ` (${round(det.score)})` : ''}`
+          : ''
+        )
       )
+
+    if (text) {
+      drawText(ctx, x, y + height, text, drawOptions)
     }
   })
 }

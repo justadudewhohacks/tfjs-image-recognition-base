@@ -6,11 +6,11 @@ export function drawText(
   x: number,
   y: number,
   text: string,
-  options: DrawTextOptions
+  options: DrawTextOptions = {}
 ) {
   const drawOptions = Object.assign(
     getDefaultDrawOptions(),
-    (options || {})
+    options
   )
 
   const padText = 2 + drawOptions.lineWidth

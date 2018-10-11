@@ -25,12 +25,7 @@ export class PredictedBox extends LabeledBox {
     this._classScore = classScore
   }
 
-  public get score(): number {
-    return this._score
-  }
-
-  public get classScore(): number {
-    return this._classScore
-  }
+  public get score(): number { return this._score }
+  public get classScore(): number { return this._classScore }
 
 }

@@ -1,7 +1,7 @@
 import { isDimensions, isValidNumber } from '../utils';
 import { IBoundingBox } from './BoundingBox';
 import { IRect } from './Rect';
-import { Dimensions } from './types';
+import { IDimensions } from './Dimensions';
 
 export class Box<BoxType = any> implements IBoundingBox, IRect {
 
@@ -26,8 +26,8 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
 
   // TODO: MTCNN boxes sometimes have negative widths or heights, figure out why and remove
   // allowNegativeDimensions flag again
-  constructor(_box: IBoundingBox | IRect | any, allowNegativeDimensions: boolean = false) {
-    const box = _box || {}
+  constructor(_box: IBoundingBox | IRect, allowNegativeDimensions: boolean = false) {
+    const box = (_box || {}) as any
 
     const isBbox = [box.left, box.top, box.right, box.bottom].every(isValidNumber)
     const isRect = [box.x, box.y, box.width, box.height].every(isValidNumber)
@@ -48,41 +48,15 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
     this._height = height
   }
 
-  public get x(): number {
-    return this._x
-  }
-
-  public get y(): number {
-    return this._y
-  }
-
-  public get width(): number {
-    return this._width
-  }
-
-  public get height(): number {
-    return this._height
-  }
-
-  public get left(): number {
-    return this.x
-  }
-
-  public get top(): number {
-    return this.y
-  }
-
-  public get right(): number {
-    return this.x + this.width
-  }
-
-  public get bottom(): number {
-    return this.y + this.height
-  }
-
-  public get area(): number {
-    return this.width * this.height
-  }
+  public get x(): number { return this._x }
+  public get y(): number { return this._y }
+  public get width(): number { return this._width }
+  public get height(): number { return this._height }
+  public get left(): number { return this.x }
+  public get top(): number { return this.y }
+  public get right(): number { return this.x + this.width }
+  public get bottom(): number { return this.y + this.height }
+  public get area(): number { return this.width * this.height }
 
   public round(): Box<BoxType> {
     const [x, y, width, height] = [this.x, this.y, this.width, this.height]
@@ -111,9 +85,9 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
     return new Box({ x, y, width, height })
   }
 
-  public rescale(s: Dimensions | number): Box<BoxType> {
-    const scaleX = isDimensions(s) ? (s as Dimensions).width : s as number
-    const scaleY = isDimensions(s) ? (s as Dimensions).height : s as number
+  public rescale(s: IDimensions | number): Box<BoxType> {
+    const scaleX = isDimensions(s) ? (s as IDimensions).width : s as number
+    const scaleY = isDimensions(s) ? (s as IDimensions).height : s as number
     return new Box({
       x: this.x * scaleX,
       y: this.y * scaleY,

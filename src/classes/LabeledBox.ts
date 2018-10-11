@@ -20,8 +20,6 @@ export class LabeledBox extends Box<LabeledBox> {
     this._label = label
   }
 
-  public get label(): number {
-    return this._label
-  }
+  public get label(): number { return this._label }
 
 }

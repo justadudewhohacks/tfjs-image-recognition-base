@@ -1,6 +1,6 @@
 import * as tf from '@tensorflow/tfjs-core';
 
-import { bufferToImage } from '../../src/dom/bufferToImage';
+import { fetchImage } from '../../src/dom/fetchImage';
 import { NetInput } from '../../src/dom/NetInput';
 import { expectAllTensorsReleased, fakeTensor3d } from '../utils';
 
@@ -9,8 +9,7 @@ describe('NetInput', () => {
   let imgEl: HTMLImageElement
 
   beforeAll(async () => {
-    const img = await (await fetch('base/test/img.png')).blob()
-    imgEl = await bufferToImage(img)
+    imgEl = await fetchImage('base/test/img.png')
   })
 
   describe('toBatchTensor', () => {

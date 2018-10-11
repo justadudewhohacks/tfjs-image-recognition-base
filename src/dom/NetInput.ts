@@ -1,6 +1,6 @@
 import * as tf from '@tensorflow/tfjs-core';
 
-import { Dimensions } from '../classes/types';
+import { Dimensions } from '../classes/Dimensions';
 import { padToSquare } from '../ops/padToSquare';
 import { computeReshapedDimensions, isTensor3D, isTensor4D, range } from '../utils';
 import { createCanvasFromMedia } from './createCanvas';

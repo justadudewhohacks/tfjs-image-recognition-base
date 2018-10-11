@@ -1,7 +1,7 @@
 import * as tf from '@tensorflow/tfjs-core';
 
-import { bufferToImage } from '../../src/dom/bufferToImage';
 import { createCanvasFromMedia } from '../../src/dom/createCanvas';
+import { fetchImage } from '../../src/dom/fetchImage';
 import { NetInput } from '../../src/dom/NetInput';
 import { toNetInput } from '../../src/dom/toNetInput';
 import { expectAllTensorsReleased } from '../utils';
@@ -11,8 +11,7 @@ describe('toNetInput', () => {
   let imgEl: HTMLImageElement, canvasEl: HTMLCanvasElement
 
   beforeAll(async () => {
-    const img = await (await fetch('base/test/img.png')).blob()
-    imgEl = await bufferToImage(img)
+    imgEl = await fetchImage('base/test/img.png')
     canvasEl = createCanvasFromMedia(imgEl)
   })
 

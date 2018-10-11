@@ -1,16 +1,16 @@
-import { Dimensions } from '../classes/types';
+import { IDimensions } from '../classes/Dimensions';
 import { getContext2dOrThrow } from './getContext2dOrThrow';
 import { getMediaDimensions } from './getMediaDimensions';
 import { isMediaLoaded } from './isMediaLoaded';
 
-export function createCanvas({ width, height }: Dimensions): HTMLCanvasElement {
+export function createCanvas({ width, height }: IDimensions): HTMLCanvasElement {
   const canvas = document.createElement('canvas')
   canvas.width = width
   canvas.height = height
   return canvas
 }
 
-export function createCanvasFromMedia(media: HTMLImageElement | HTMLVideoElement, dims?: Dimensions): HTMLCanvasElement {
+export function createCanvasFromMedia(media: HTMLImageElement | HTMLVideoElement, dims?: IDimensions): HTMLCanvasElement {
   if (!isMediaLoaded(media)) {
     throw new Error('createCanvasFromMedia - media has not finished loading yet')
   }

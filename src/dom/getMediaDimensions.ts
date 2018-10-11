@@ -1,11 +1,11 @@
-import { Dimensions } from '../classes/types';
+import { Dimensions, IDimensions } from '../classes/Dimensions';
 
-export function getMediaDimensions(input: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | Dimensions): Dimensions {
+export function getMediaDimensions(input: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | IDimensions): Dimensions {
   if (input instanceof HTMLImageElement) {
-    return { width: input.naturalWidth, height: input.naturalHeight }
+    return new Dimensions(input.naturalWidth, input.naturalHeight)
   }
   if (input instanceof HTMLVideoElement) {
-    return { width: input.videoWidth, height: input.videoHeight }
+    return new Dimensions(input.videoWidth, input.videoHeight)
   }
-  return input
+  return new Dimensions(input.width, input.height)
 }
