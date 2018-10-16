@@ -3,9 +3,11 @@ export interface IPoint {
     y: number;
 }
 export declare class Point implements IPoint {
-    x: number;
-    y: number;
+    private _x;
+    private _y;
     constructor(x: number, y: number);
+    readonly x: number;
+    readonly y: number;
     add(pt: IPoint): Point;
     sub(pt: IPoint): Point;
     mul(pt: IPoint): Point;

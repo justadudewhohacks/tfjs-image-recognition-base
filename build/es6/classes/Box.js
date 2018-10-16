@@ -4,7 +4,7 @@ var Box = /** @class */ (function () {
     // allowNegativeDimensions flag again
     function Box(_box, allowNegativeDimensions) {
         if (allowNegativeDimensions === void 0) { allowNegativeDimensions = false; }
-        var box = _box || {};
+        var box = (_box || {});
         var isBbox = [box.left, box.top, box.right, box.bottom].every(isValidNumber);
         var isRect = [box.x, box.y, box.width, box.height].every(isValidNumber);
         if (!isRect && !isBbox) {
@@ -32,65 +32,47 @@ var Box = /** @class */ (function () {
         }
     };
     Object.defineProperty(Box.prototype, "x", {
-        get: function () {
-            return this._x;
-        },
+        get: function () { return this._x; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Box.prototype, "y", {
-        get: function () {
-            return this._y;
-        },
+        get: function () { return this._y; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Box.prototype, "width", {
-        get: function () {
-            return this._width;
-        },
+        get: function () { return this._width; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Box.prototype, "height", {
-        get: function () {
-            return this._height;
-        },
+        get: function () { return this._height; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Box.prototype, "left", {
-        get: function () {
-            return this.x;
-        },
+        get: function () { return this.x; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Box.prototype, "top", {
-        get: function () {
-            return this.y;
-        },
+        get: function () { return this.y; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Box.prototype, "right", {
-        get: function () {
-            return this.x + this.width;
-        },
+        get: function () { return this.x + this.width; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Box.prototype, "bottom", {
-        get: function () {
-            return this.y + this.height;
-        },
+        get: function () { return this.y + this.height; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Box.prototype, "area", {
-        get: function () {
-            return this.width * this.height;
-        },
+        get: function () { return this.width * this.height; },
         enumerable: true,
         configurable: true
     });

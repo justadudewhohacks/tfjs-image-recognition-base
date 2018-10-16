@@ -7,16 +7,17 @@ var NeuralNetwork = /** @class */ (function () {
         this._paramMappings = [];
     }
     Object.defineProperty(NeuralNetwork.prototype, "params", {
-        get: function () {
-            return this._params;
-        },
+        get: function () { return this._params; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(NeuralNetwork.prototype, "paramMappings", {
-        get: function () {
-            return this._paramMappings;
-        },
+        get: function () { return this._paramMappings; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(NeuralNetwork.prototype, "isLoaded", {
+        get: function () { return !!this.params; },
         enumerable: true,
         configurable: true
     });

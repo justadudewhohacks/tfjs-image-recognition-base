@@ -1,5 +1,5 @@
 import * as tf from '@tensorflow/tfjs-core';
-import { Dimensions } from '../classes/types';
+import { Dimensions } from '../classes/Dimensions';
 import { TResolvedNetInput } from './types';
 export declare class NetInput {
     private _imageTensors;

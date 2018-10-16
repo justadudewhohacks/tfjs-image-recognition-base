@@ -15,9 +15,7 @@ var LabeledBox = /** @class */ (function (_super) {
         }
     };
     Object.defineProperty(LabeledBox.prototype, "label", {
-        get: function () {
-            return this._label;
-        },
+        get: function () { return this._label; },
         enumerable: true,
         configurable: true
     });

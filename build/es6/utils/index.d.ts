@@ -1,6 +1,6 @@
 import * as tf from '@tensorflow/tfjs-core';
+import { Dimensions, IDimensions } from '../classes/Dimensions';
 import { Point } from '../classes/Point';
-import { Dimensions } from '../classes/types';
 export declare function isTensor(tensor: any, dim: number): boolean;
 export declare function isTensor1D(tensor: any): tensor is tf.Tensor1D;
 export declare function isTensor2D(tensor: any): tensor is tf.Tensor2D;
@@ -10,10 +10,7 @@ export declare function isFloat(num: number): boolean;
 export declare function isEven(num: number): boolean;
 export declare function round(num: number, prec?: number): number;
 export declare function isDimensions(obj: any): boolean;
-export declare function computeReshapedDimensions({ width, height }: Dimensions, inputSize: number): {
-    height: number;
-    width: number;
-};
+export declare function computeReshapedDimensions({ width, height }: IDimensions, inputSize: number): Dimensions;
 export declare function getCenterPoint(pts: Point[]): Point;
 export declare function range(num: number, start: number, step: number): number[];
 export declare function isValidNumber(num: any): boolean;

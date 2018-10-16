@@ -1,80 +1,55 @@
-import { Rect } from './Rect';
+import { Box } from './Box';
+import { Dimensions } from './Dimensions';
 var ObjectDetection = /** @class */ (function () {
     function ObjectDetection(score, classScore, className, relativeBox, imageDims) {
-        var width = imageDims.width, height = imageDims.height;
-        this._imageWidth = width;
-        this._imageHeight = height;
+        this._imageDims = new Dimensions(imageDims.width, imageDims.height);
         this._score = score;
         this._classScore = classScore;
         this._className = className;
-        this._box = new Rect(relativeBox.x * width, relativeBox.y * height, relativeBox.width * width, relativeBox.height * height);
+        this._box = new Box(relativeBox).rescale(this._imageDims);
     }
     Object.defineProperty(ObjectDetection.prototype, "score", {
-        get: function () {
-            return this._score;
-        },
+        get: function () { return this._score; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ObjectDetection.prototype, "classScore", {
-        get: function () {
-            return this._classScore;
-        },
+        get: function () { return this._classScore; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ObjectDetection.prototype, "className", {
-        get: function () {
-            return this._className;
-        },
+        get: function () { return this._className; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ObjectDetection.prototype, "box", {
-        get: function () {
-            return this._box;
-        },
+        get: function () { return this._box; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ObjectDetection.prototype, "imageDims", {
+        get: function () { return this._imageDims; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ObjectDetection.prototype, "imageWidth", {
-        get: function () {
-            return this._imageWidth;
-        },
+        get: function () { return this.imageDims.width; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ObjectDetection.prototype, "imageHeight", {
-        get: function () {
-            return this._imageHeight;
-        },
+        get: function () { return this.imageDims.height; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ObjectDetection.prototype, "relativeBox", {
-        get: function () {
-            return new Rect(this._box.x / this._imageWidth, this._box.y / this._imageHeight, this._box.width / this._imageWidth, this._box.height / this._imageHeight);
-        },
+        get: function () { return new Box(this._box).rescale(this.imageDims.reverse()); },
         enumerable: true,
         configurable: true
     });
-    ObjectDetection.prototype.getScore = function () {
-        return this.score;
-    };
-    ObjectDetection.prototype.getBox = function () {
-        return this.box;
-    };
-    ObjectDetection.prototype.getImageWidth = function () {
-        return this.imageWidth;
-    };
-    ObjectDetection.prototype.getImageHeight = function () {
-        return this.imageHeight;
-    };
-    ObjectDetection.prototype.getRelativeBox = function () {
-        return this.relativeBox;
-    };
     ObjectDetection.prototype.forSize = function (width, height) {
-        return new ObjectDetection(this.score, this.classScore, this.className, this.getRelativeBox(), { width: width, height: height });
+        return new ObjectDetection(this.score, this.classScore, this.className, this.relativeBox, { width: width, height: height });
     };
     return ObjectDetection;
 }());

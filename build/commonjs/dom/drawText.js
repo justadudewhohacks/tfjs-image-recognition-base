@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var getDefaultDrawOptions_1 = require("./getDefaultDrawOptions");
 function drawText(ctx, x, y, text, options) {
-    var drawOptions = Object.assign(getDefaultDrawOptions_1.getDefaultDrawOptions(), (options || {}));
+    if (options === void 0) { options = {}; }
+    var drawOptions = Object.assign(getDefaultDrawOptions_1.getDefaultDrawOptions(), options);
     var padText = 2 + drawOptions.lineWidth;
     ctx.fillStyle = drawOptions.textColor;
     ctx.font = drawOptions.fontSize + "px " + drawOptions.fontStyle;

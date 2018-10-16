@@ -19,16 +19,12 @@ var PredictedBox = /** @class */ (function (_super) {
         }
     };
     Object.defineProperty(PredictedBox.prototype, "score", {
-        get: function () {
-            return this._score;
-        },
+        get: function () { return this._score; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PredictedBox.prototype, "classScore", {
-        get: function () {
-            return this._classScore;
-        },
+        get: function () { return this._classScore; },
         enumerable: true,
         configurable: true
     });

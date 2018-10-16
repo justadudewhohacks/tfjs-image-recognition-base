@@ -12,7 +12,7 @@ export declare type DrawTextOptions = {
     lineWidth?: number;
     fontSize?: number;
     fontStyle?: string;
-    color?: string;
+    textColor?: string;
 };
 export declare type DrawDetectionOptions = {
     lineWidth?: number;

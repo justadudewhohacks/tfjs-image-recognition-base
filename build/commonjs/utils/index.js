@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var tf = require("@tensorflow/tfjs-core");
+var Dimensions_1 = require("../classes/Dimensions");
 var Point_1 = require("../classes/Point");
 function isTensor(tensor, dim) {
     return tensor instanceof tf.Tensor && tensor.shape.length === dim;
@@ -43,10 +44,7 @@ exports.isDimensions = isDimensions;
 function computeReshapedDimensions(_a, inputSize) {
     var width = _a.width, height = _a.height;
     var scale = inputSize / Math.max(height, width);
-    return {
-        height: Math.round(height * scale),
-        width: Math.round(width * scale)
-    };
+    return new Dimensions_1.Dimensions(Math.round(width * scale), Math.round(height * scale));
 }
 exports.computeReshapedDimensions = computeReshapedDimensions;
 function getCenterPoint(pts) {

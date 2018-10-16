@@ -1,6 +1,6 @@
 import { IBoundingBox } from './BoundingBox';
 import { IRect } from './Rect';
-import { Dimensions } from './types';
+import { IDimensions } from './Dimensions';
 export declare class Box<BoxType = any> implements IBoundingBox, IRect {
     static isRect(rect: any): boolean;
     static assertIsValidBox(box: any, callee: string, allowNegativeDimensions?: boolean): void;
@@ -8,7 +8,7 @@ export declare class Box<BoxType = any> implements IBoundingBox, IRect {
     private _y;
     private _width;
     private _height;
-    constructor(_box: IBoundingBox | IRect | any, allowNegativeDimensions?: boolean);
+    constructor(_box: IBoundingBox | IRect, allowNegativeDimensions?: boolean);
     readonly x: number;
     readonly y: number;
     readonly width: number;
@@ -21,7 +21,7 @@ export declare class Box<BoxType = any> implements IBoundingBox, IRect {
     round(): Box<BoxType>;
     floor(): Box<BoxType>;
     toSquare(): Box<BoxType>;
-    rescale(s: Dimensions | number): Box<BoxType>;
+    rescale(s: IDimensions | number): Box<BoxType>;
     pad(padX: number, padY: number): Box<BoxType>;
     clipAtImageBorders(imgWidth: number, imgHeight: number): Box<BoxType>;
     padAtBorders(imageHeight: number, imageWidth: number): {

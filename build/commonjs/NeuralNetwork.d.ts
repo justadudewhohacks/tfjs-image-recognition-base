@@ -7,6 +7,7 @@ export declare class NeuralNetwork<TNetParams> {
     constructor(_name: string);
     readonly params: TNetParams | undefined;
     readonly paramMappings: ParamMapping[];
+    readonly isLoaded: boolean;
     getParamFromPath(paramPath: string): tf.Tensor;
     reassignParamFromPath(paramPath: string, tensor: tf.Tensor): void;
     getParamList(): {

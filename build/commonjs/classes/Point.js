@@ -2,9 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Point = /** @class */ (function () {
     function Point(x, y) {
-        this.x = x;
-        this.y = y;
+        this._x = x;
+        this._y = y;
     }
+    Object.defineProperty(Point.prototype, "x", {
+        get: function () { return this._x; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Point.prototype, "y", {
+        get: function () { return this._y; },
+        enumerable: true,
+        configurable: true
+    });
     Point.prototype.add = function (pt) {
         return new Point(this.x + pt.x, this.y + pt.y);
     };

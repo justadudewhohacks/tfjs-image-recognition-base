@@ -1,6 +1,7 @@
 import { getDefaultDrawOptions } from './getDefaultDrawOptions';
 export function drawText(ctx, x, y, text, options) {
-    var drawOptions = Object.assign(getDefaultDrawOptions(), (options || {}));
+    if (options === void 0) { options = {}; }
+    var drawOptions = Object.assign(getDefaultDrawOptions(), options);
     var padText = 2 + drawOptions.lineWidth;
     ctx.fillStyle = drawOptions.textColor;
     ctx.font = drawOptions.fontSize + "px " + drawOptions.fontStyle;
