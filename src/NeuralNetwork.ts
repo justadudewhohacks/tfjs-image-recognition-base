@@ -9,13 +9,9 @@ export class NeuralNetwork<TNetParams> {
 
   constructor(private _name: string) {}
 
-  public get params(): TNetParams | undefined {
-    return this._params
-  }
-
-  public get paramMappings(): ParamMapping[] {
-    return this._paramMappings
-  }
+  public get params(): TNetParams | undefined { return this._params }
+  public get paramMappings(): ParamMapping[] { return this._paramMappings }
+  public get isLoaded(): boolean { return !!this.params }
 
   public getParamFromPath(paramPath: string): tf.Tensor {
     const { obj, objProp } = this.traversePropertyPath(paramPath)

@@ -19,7 +19,7 @@ export type DrawTextOptions = {
   lineWidth?: number
   fontSize?: number
   fontStyle?: string
-  color?: string
+  textColor?: string
 }
 
 export type DrawDetectionOptions = {
