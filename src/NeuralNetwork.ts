@@ -1,8 +1,11 @@
 import * as tf from '@tensorflow/tfjs-core';
 
 import { ParamMapping } from './common';
+import { getModelUris } from './common/getModelUris';
+import { loadWeightMap } from './dom';
+import { env } from './env';
 
-export class NeuralNetwork<TNetParams> {
+export abstract class NeuralNetwork<TNetParams> {
 
   protected _params: TNetParams | undefined = undefined
   protected _paramMappings: ParamMapping[] = []
@@ -77,13 +80,43 @@ export class NeuralNetwork<TNetParams> {
       return
     }
 
-    if (weightsOrUrl && typeof weightsOrUrl !== 'string') {
-      throw new Error(`${this._name}.load - expected model uri, or weights as Float32Array`)
+    await this.loadFromUri(weightsOrUrl)
+  }
+
+  public async loadFromUri(uri: string | undefined) {
+    if (uri && typeof uri !== 'string') {
+      throw new Error(`${this._name}.loadFromUri - expected model uri`)
     }
+
+    const weightMap = await loadWeightMap(uri, this.getDefaultModelName())
+    this.loadFromWeightMap(weightMap)
+  }
+
+  public async loadFromDisk(filePath: string | undefined) {
+    if (filePath && typeof filePath !== 'string') {
+      throw new Error(`${this._name}.loadFromDisk - expected model file path`)
+    }
+
+    const { readFile } = env.getEnv()
+
+    const { manifestUri, modelBaseUri } = getModelUris(filePath, this.getDefaultModelName())
+
+    const fetchWeightsFromDisk = (filePaths: string[]) => Promise.all(
+      filePaths.map(filePath => readFile(filePath).then(buf => buf.buffer))
+    )
+    const loadWeights = tf.io.weightsLoaderFactory(fetchWeightsFromDisk)
+
+    const manifest = JSON.parse((await readFile(manifestUri)).toString())
+    const weightMap = await loadWeights(manifest, modelBaseUri)
+
+    this.loadFromWeightMap(weightMap)
+  }
+
+  public loadFromWeightMap(weightMap: tf.NamedTensorMap) {
     const {
       paramMappings,
       params
-    } = await this.loadQuantizedParams(weightsOrUrl)
+    } = this.extractParamsFromWeigthMap(weightMap)
 
     this._paramMappings = paramMappings
     this._params = params
@@ -120,11 +153,7 @@ export class NeuralNetwork<TNetParams> {
     return { obj, objProp }
   }
 
-  protected loadQuantizedParams(_: any): Promise<{ params: TNetParams, paramMappings: ParamMapping[] }> {
-    throw new Error(`${this._name}.loadQuantizedParams - not implemented`)
-  }
-
-  protected extractParams(_: any): { params: TNetParams, paramMappings: ParamMapping[] } {
-    throw new Error(`${this._name}.extractParams - not implemented`)
-  }
+  protected abstract getDefaultModelName(): string
+  protected abstract extractParamsFromWeigthMap(weightMap: tf.NamedTensorMap): { params: TNetParams, paramMappings: ParamMapping[] }
+  protected abstract extractParams(weights: Float32Array): { params: TNetParams, paramMappings: ParamMapping[] }
 }

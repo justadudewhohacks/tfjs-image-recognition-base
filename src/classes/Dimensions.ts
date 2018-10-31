@@ -1,4 +1,4 @@
-import { isNumber } from 'util';
+import { isValidNumber } from '../utils';
 
 export interface IDimensions {
   width: number
@@ -11,7 +11,7 @@ export class Dimensions implements IDimensions {
   private _height: number
 
   constructor(width: number, height: number) {
-    if (!isNumber(width) || !isNumber(height)) {
+    if (!isValidNumber(width) || !isValidNumber(height)) {
       throw new Error(`Dimensions.constructor - expected width and height to be valid numbers, instead have ${JSON.stringify({ width, height })}`)
     }
 

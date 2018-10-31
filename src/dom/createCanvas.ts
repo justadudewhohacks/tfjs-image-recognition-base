@@ -2,9 +2,12 @@ import { IDimensions } from '../classes/Dimensions';
 import { getContext2dOrThrow } from './getContext2dOrThrow';
 import { getMediaDimensions } from './getMediaDimensions';
 import { isMediaLoaded } from './isMediaLoaded';
+import { env } from '../env/index';
 
 export function createCanvas({ width, height }: IDimensions): HTMLCanvasElement {
-  const canvas = document.createElement('canvas')
+
+  const { createCanvasElement } = env.getEnv()
+  const canvas = createCanvasElement()
   canvas.width = width
   canvas.height = height
   return canvas

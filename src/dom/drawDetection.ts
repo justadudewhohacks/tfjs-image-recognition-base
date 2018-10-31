@@ -2,6 +2,7 @@ import { BoxWithText } from '../classes/BoxWithText';
 import { ObjectDetection } from '../classes/ObjectDetection';
 import { PredictedBox } from '../classes/PredictedBox';
 import { Rect } from '../classes/Rect';
+import { env } from '../env';
 import { round } from '../utils';
 import { drawBox } from './drawBox';
 import { drawText } from './drawText';
@@ -15,8 +16,11 @@ export function drawDetection(
   detection: Rect | PredictedBox | ObjectDetection | BoxWithText | Array<Rect | PredictedBox | ObjectDetection | BoxWithText>,
   options?: DrawDetectionOptions
 ) {
+
+  const { Canvas } = env.getEnv()
+
   const canvas = resolveInput(canvasArg)
-  if (!(canvas instanceof HTMLCanvasElement)) {
+  if (!(canvas instanceof Canvas)) {
     throw new Error('drawDetection - expected canvas to be of type: HTMLCanvasElement')
   }
 

@@ -23,6 +23,18 @@ class FakeNeuralNetwork extends NeuralNetwork<any> {
       { originalPath: 'dense/weights', paramPath: 'fc' }
     ]
   }
+
+  protected getDefaultModelName(): any {
+    throw new Error('FakeNeuralNetwork - getDefaultModelName not implemented')
+  }
+
+  protected extractParams(_: any): any {
+    throw new Error('FakeNeuralNetwork - extractParams not implemented')
+  }
+
+  protected extractParamsFromWeigthMap(_: any): any {
+    throw new Error('FakeNeuralNetwork - extractParamsFromWeigthMap not implemented')
+  }
 }
 
 describe('NeuralNetwork', () => {

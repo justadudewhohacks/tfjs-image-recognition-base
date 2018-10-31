@@ -1,6 +1,7 @@
 import * as tf from '@tensorflow/tfjs-core';
 
 import { Dimensions } from '../classes/Dimensions';
+import { env } from '../env';
 import { padToSquare } from '../ops/padToSquare';
 import { computeReshapedDimensions, isTensor3D, isTensor4D, range } from '../utils';
 import { createCanvasFromMedia } from './createCanvas';
@@ -46,7 +47,7 @@ export class NetInput {
         return
       }
 
-      const canvas = input instanceof HTMLCanvasElement ? input : createCanvasFromMedia(input as HTMLImageElement | HTMLVideoElement)
+      const canvas = input instanceof env.getEnv().Canvas ? input : createCanvasFromMedia(input)
       this._canvases[idx] = canvas
       this._inputDimensions[idx] = [canvas.height, canvas.width, 3]
     })
@@ -137,7 +138,7 @@ export class NetInput {
           return imgTensor.as3D(inputSize, inputSize, 3)
         }
 
-        if (input instanceof HTMLCanvasElement) {
+        if (input instanceof env.getEnv().Canvas) {
           return tf.fromPixels(imageToSquare(input, inputSize, isCenterInputs))
         }
 

@@ -1,4 +1,9 @@
+import { env } from '../env';
+
 export function isMediaLoaded(media: HTMLImageElement | HTMLVideoElement) : boolean {
-  return (media instanceof HTMLImageElement && media.complete)
-    || (media instanceof HTMLVideoElement && media.readyState >= 3)
+
+  const { Image, Video } = env.getEnv()
+
+  return (media instanceof Image && media.complete)
+    || (media instanceof Video && media.readyState >= 3)
 }
