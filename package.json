@@ -11,12 +11,12 @@
     "build": "rm -rf ./build && npm run tsc && npm run tsc-es6",
     "test": "karma start",
     "test-node": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine-node.json",
-    "test-travis": "set karma start --single-run"
+    "test-travis": "karma start --single-run"
   },
   "author": "justadudewhohacks",
   "license": "MIT",
   "dependencies": {
-    "@tensorflow/tfjs-core": "^0.13.9",
+    "@tensorflow/tfjs-core": "0.13.7",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
@@ -31,6 +31,6 @@
     "karma-jasmine": "^1.1.2",
     "karma-typescript": "^3.0.12",
     "ts-node": "^7.0.1",
-    "typescript": "^2.9.2"
+    "typescript": "2.8.4"
   }
 }
