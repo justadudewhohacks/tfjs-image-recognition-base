@@ -1,4 +1,5 @@
 import * as tf from '@tensorflow/tfjs-core';
+import { env } from '../env';
 import { padToSquare } from '../ops/padToSquare';
 import { computeReshapedDimensions, isTensor3D, isTensor4D, range } from '../utils';
 import { createCanvasFromMedia } from './createCanvas';
@@ -31,7 +32,7 @@ var NetInput = /** @class */ (function () {
                 _this._inputDimensions[idx] = input.shape.slice(1);
                 return;
             }
-            var canvas = input instanceof HTMLCanvasElement ? input : createCanvasFromMedia(input);
+            var canvas = input instanceof env.getEnv().Canvas ? input : createCanvasFromMedia(input);
             _this._canvases[idx] = canvas;
             _this._inputDimensions[idx] = [canvas.height, canvas.width, 3];
         });
@@ -130,7 +131,7 @@ var NetInput = /** @class */ (function () {
                     }
                     return imgTensor.as3D(inputSize, inputSize, 3);
                 }
-                if (input instanceof HTMLCanvasElement) {
+                if (input instanceof env.getEnv().Canvas) {
                     return tf.fromPixels(imageToSquare(input, inputSize, isCenterInputs));
                 }
                 throw new Error("toBatchTensor - at batchIdx " + batchIdx + ", expected input to be instanceof tf.Tensor or instanceof HTMLCanvasElement, instead have " + input);

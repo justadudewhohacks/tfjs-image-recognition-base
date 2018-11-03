@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var BoxWithText_1 = require("../classes/BoxWithText");
 var ObjectDetection_1 = require("../classes/ObjectDetection");
 var PredictedBox_1 = require("../classes/PredictedBox");
+var env_1 = require("../env");
 var utils_1 = require("../utils");
 var drawBox_1 = require("./drawBox");
 var drawText_1 = require("./drawText");
@@ -10,8 +11,9 @@ var getContext2dOrThrow_1 = require("./getContext2dOrThrow");
 var getDefaultDrawOptions_1 = require("./getDefaultDrawOptions");
 var resolveInput_1 = require("./resolveInput");
 function drawDetection(canvasArg, detection, options) {
+    var Canvas = env_1.env.getEnv().Canvas;
     var canvas = resolveInput_1.resolveInput(canvasArg);
-    if (!(canvas instanceof HTMLCanvasElement)) {
+    if (!(canvas instanceof Canvas)) {
         throw new Error('drawDetection - expected canvas to be of type: HTMLCanvasElement');
     }
     var detectionArray = Array.isArray(detection)

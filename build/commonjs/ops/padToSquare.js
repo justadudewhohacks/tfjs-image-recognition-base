@@ -34,7 +34,8 @@ function padToSquare(imgTensor, isCenterImage) {
             imgTensor,
             paddingTensorAppend
         ]
-            .filter(function (t) { return t !== null; });
+            .filter(function (t) { return !!t; })
+            .map(function (t) { return t.toFloat(); });
         return tf.concat(tensorsToStack, paddingAxis);
     });
 }

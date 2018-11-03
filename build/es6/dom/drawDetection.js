@@ -1,6 +1,7 @@
 import { BoxWithText } from '../classes/BoxWithText';
 import { ObjectDetection } from '../classes/ObjectDetection';
 import { PredictedBox } from '../classes/PredictedBox';
+import { env } from '../env';
 import { round } from '../utils';
 import { drawBox } from './drawBox';
 import { drawText } from './drawText';
@@ -8,8 +9,9 @@ import { getContext2dOrThrow } from './getContext2dOrThrow';
 import { getDefaultDrawOptions } from './getDefaultDrawOptions';
 import { resolveInput } from './resolveInput';
 export function drawDetection(canvasArg, detection, options) {
+    var Canvas = env.getEnv().Canvas;
     var canvas = resolveInput(canvasArg);
-    if (!(canvas instanceof HTMLCanvasElement)) {
+    if (!(canvas instanceof Canvas)) {
         throw new Error('drawDetection - expected canvas to be of type: HTMLCanvasElement');
     }
     var detectionArray = Array.isArray(detection)

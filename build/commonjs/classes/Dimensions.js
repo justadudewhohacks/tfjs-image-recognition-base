@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = require("util");
+var utils_1 = require("../utils");
 var Dimensions = /** @class */ (function () {
     function Dimensions(width, height) {
-        if (!util_1.isNumber(width) || !util_1.isNumber(height)) {
+        if (!utils_1.isValidNumber(width) || !utils_1.isValidNumber(height)) {
             throw new Error("Dimensions.constructor - expected width and height to be valid numbers, instead have " + JSON.stringify({ width: width, height: height }));
         }
         this._width = width;

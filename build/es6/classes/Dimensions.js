@@ -1,7 +1,7 @@
-import { isNumber } from 'util';
+import { isValidNumber } from '../utils';
 var Dimensions = /** @class */ (function () {
     function Dimensions(width, height) {
-        if (!isNumber(width) || !isNumber(height)) {
+        if (!isValidNumber(width) || !isValidNumber(height)) {
             throw new Error("Dimensions.constructor - expected width and height to be valid numbers, instead have " + JSON.stringify({ width: width, height: height }));
         }
         this._width = width;

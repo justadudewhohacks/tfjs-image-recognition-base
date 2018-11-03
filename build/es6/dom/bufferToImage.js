@@ -1,3 +1,4 @@
+import { env } from '../env';
 export function bufferToImage(buf) {
     return new Promise(function (resolve, reject) {
         if (!(buf instanceof Blob)) {
@@ -8,7 +9,7 @@ export function bufferToImage(buf) {
             if (typeof reader.result !== 'string') {
                 return reject('bufferToImage - expected reader.result to be a string, in onload');
             }
-            var img = new Image();
+            var img = env.getEnv().createImageElement();
             img.onload = function () { return resolve(img); };
             img.onerror = reject;
             img.src = reader.result;

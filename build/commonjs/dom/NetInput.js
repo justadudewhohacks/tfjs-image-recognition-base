@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var tf = require("@tensorflow/tfjs-core");
+var env_1 = require("../env");
 var padToSquare_1 = require("../ops/padToSquare");
 var utils_1 = require("../utils");
 var createCanvas_1 = require("./createCanvas");
@@ -33,7 +34,7 @@ var NetInput = /** @class */ (function () {
                 _this._inputDimensions[idx] = input.shape.slice(1);
                 return;
             }
-            var canvas = input instanceof HTMLCanvasElement ? input : createCanvas_1.createCanvasFromMedia(input);
+            var canvas = input instanceof env_1.env.getEnv().Canvas ? input : createCanvas_1.createCanvasFromMedia(input);
             _this._canvases[idx] = canvas;
             _this._inputDimensions[idx] = [canvas.height, canvas.width, 3];
         });
@@ -132,7 +133,7 @@ var NetInput = /** @class */ (function () {
                     }
                     return imgTensor.as3D(inputSize, inputSize, 3);
                 }
-                if (input instanceof HTMLCanvasElement) {
+                if (input instanceof env_1.env.getEnv().Canvas) {
                     return tf.fromPixels(imageToSquare_1.imageToSquare(input, inputSize, isCenterInputs));
                 }
                 throw new Error("toBatchTensor - at batchIdx " + batchIdx + ", expected input to be instanceof tf.Tensor or instanceof HTMLCanvasElement, instead have " + input);

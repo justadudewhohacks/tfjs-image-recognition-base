@@ -1,5 +1,6 @@
+import { env } from '../env';
 export function resolveInput(arg) {
-    if (typeof arg === 'string') {
+    if (!env.isNodejs() && typeof arg === 'string') {
         return document.getElementById(arg);
     }
     return arg;
