@@ -21,6 +21,7 @@ function monkeyPatch(env: Partial<Environment>) {
   environment.createCanvasElement = env.createCanvasElement || (() => new Canvas())
   environment.createImageElement = env.createImageElement || (() => new Image())
 
+  environment.ImageData = env.ImageData || environment.ImageData
   environment.Video = env.Video || environment.Video
   environment.fetch = env.fetch || environment.fetch
   environment.readFile = env.readFile || environment.readFile

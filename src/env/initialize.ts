@@ -52,6 +52,7 @@ function initializeNodejsEnv(): Environment {
   return {
     Canvas: Canvas || class {},
     Image: Image || class {},
+    ImageData: global['ImageData'] || class {},
     Video: global['HTMLVideoElement'] || class {},
     createCanvasElement,
     createImageElement,
@@ -73,6 +74,7 @@ function initializeBrowserEnv(): Environment {
   return {
     Canvas: HTMLCanvasElement,
     Image: HTMLImageElement,
+    ImageData: ImageData,
     Video: HTMLVideoElement,
     createCanvasElement: () => document.createElement('canvas'),
     createImageElement: () => document.createElement('img'),

@@ -10,13 +10,14 @@
     "tsc-es6": "tsc --p tsconfig.es6.json",
     "build": "rm -rf ./build && npm run tsc && npm run tsc-es6",
     "test": "karma start",
+    "test-browser": "karma start --single-run",
     "test-node": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine-node.json",
-    "test-travis": "karma start --single-run"
+    "test-all": "npm run test-browser && npm run test-node"
   },
   "author": "justadudewhohacks",
   "license": "MIT",
   "dependencies": {
-    "@tensorflow/tfjs-core": "0.13.7",
+    "@tensorflow/tfjs-core": "0.13.8",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
