@@ -4,6 +4,7 @@ import { ParamMapping } from './common';
 import { getModelUris } from './common/getModelUris';
 import { loadWeightMap } from './dom';
 import { env } from './env';
+import { weightsLoaderFactory } from './weightsLoaderFactory';
 
 export abstract class NeuralNetwork<TNetParams> {
 
@@ -104,7 +105,7 @@ export abstract class NeuralNetwork<TNetParams> {
     const fetchWeightsFromDisk = (filePaths: string[]) => Promise.all(
       filePaths.map(filePath => readFile(filePath).then(buf => buf.buffer))
     )
-    const loadWeights = tf.io.weightsLoaderFactory(fetchWeightsFromDisk)
+    const loadWeights = weightsLoaderFactory(fetchWeightsFromDisk)
 
     const manifest = JSON.parse((await readFile(manifestUri)).toString())
     const weightMap = await loadWeights(manifest, modelBaseUri)

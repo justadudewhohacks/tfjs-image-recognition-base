@@ -16,7 +16,7 @@
   "author": "justadudewhohacks",
   "license": "MIT",
   "dependencies": {
-    "@tensorflow/tfjs-core": "../tfjs-core",
+    "@tensorflow/tfjs-core": "^0.13.9",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
