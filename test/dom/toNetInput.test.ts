@@ -1,9 +1,10 @@
 import * as tf from '@tensorflow/tfjs-core';
 
 import { createCanvasFromMedia } from '../../src/dom/createCanvas';
-import { fetchImage } from '../../src/dom/fetchImage';
 import { NetInput } from '../../src/dom/NetInput';
 import { toNetInput } from '../../src/dom/toNetInput';
+import { env } from '../../src/env';
+import { loadImage } from '../env';
 import { expectAllTensorsReleased } from '../utils';
 
 describe('toNetInput', () => {
@@ -11,7 +12,7 @@ describe('toNetInput', () => {
   let imgEl: HTMLImageElement, canvasEl: HTMLCanvasElement
 
   beforeAll(async () => {
-    imgEl = await fetchImage('base/test/img.png')
+    imgEl = await loadImage('test/img.png')
     canvasEl = createCanvasFromMedia(imgEl)
   })
 
@@ -83,7 +84,7 @@ describe('toNetInput', () => {
     it('undefined at input index 1', async () => {
       let errorMessage
       try {
-        await toNetInput([document.createElement('img'), undefined] as any)
+        await toNetInput([env.getEnv().createImageElement(), undefined] as any)
       } catch (error) {
           errorMessage = error.message;
       }
@@ -95,7 +96,7 @@ describe('toNetInput', () => {
   describe('no memory leaks', () => {
 
     it('constructor', async () => {
-      const tensors = [imgEl, imgEl, imgEl].map(el => tf.fromPixels(el))
+      const tensors = [imgEl, imgEl, imgEl].map(el => tf.fromPixels(createCanvasFromMedia(el)))
       const tensor4ds = tensors.map(t => t.expandDims<tf.Rank.R4>())
 
       await expectAllTensorsReleased(async () => {

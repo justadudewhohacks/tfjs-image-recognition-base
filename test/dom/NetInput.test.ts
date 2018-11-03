@@ -1,7 +1,7 @@
 import * as tf from '@tensorflow/tfjs-core';
 
-import { fetchImage } from '../../src/dom/fetchImage';
 import { NetInput } from '../../src/dom/NetInput';
+import { loadImage } from '../env';
 import { expectAllTensorsReleased, fakeTensor3d } from '../utils';
 
 describe('NetInput', () => {
@@ -9,7 +9,7 @@ describe('NetInput', () => {
   let imgEl: HTMLImageElement
 
   beforeAll(async () => {
-    imgEl = await fetchImage('base/test/img.png')
+    imgEl = await loadImage('test/img.png')
   })
 
   describe('toBatchTensor', () => {

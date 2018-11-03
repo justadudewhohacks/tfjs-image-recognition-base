@@ -1,5 +1,6 @@
 import { meanAveragePrecision } from '../../src/metrics/meanAveragePrecision';
 import { createLabeledBox, createPredictedBox } from '../utils';
+import { loadJson } from '../env';
 
 describe('meanAveragePrecision', () => {
 
@@ -118,7 +119,7 @@ describe('meanAveragePrecision', () => {
     let boxesJson: any[]
 
     beforeAll(async () => {
-      boxesJson = (await (await fetch('base/test/boxes.json')).json()).map(
+      boxesJson = (await loadJson<any>('test/boxes.json')).map(
         ({ groundTruth, predictions }: any) => ({
           groundTruth: groundTruth.map(({ x, y, width, height, label }: any) => createLabeledBox(x, y, width, height, label)),
           predictions: predictions.map(({ x, y, width, height, label, score, classScore }: any) => createPredictedBox(x, y, width, height, label, score, classScore))
