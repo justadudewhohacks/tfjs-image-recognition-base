@@ -1,8 +1,10 @@
+import { env } from '../env';
 import { isMediaLoaded } from './isMediaLoaded';
 
 export function awaitMediaLoaded(media: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement) {
+
   return new Promise((resolve, reject) => {
-    if (media instanceof HTMLCanvasElement || isMediaLoaded(media)) {
+    if (media instanceof env.getEnv().Canvas || isMediaLoaded(media)) {
       return resolve()
     }
 
