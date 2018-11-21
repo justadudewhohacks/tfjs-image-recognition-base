@@ -1,8 +1,13 @@
 import { isNodejs } from './isNodejs';
+import { isBrowser } from './isBrowser';
 export function initializeEnvironment() {
-    return isNodejs()
-        ? initializeNodejsEnv()
-        : initializeBrowserEnv();
+    if (isNodejs()) {
+        return initializeNodejsEnv();
+    }
+    if (isBrowser()) {
+        return initializeBrowserEnv();
+    }
+    return null;
 }
 function initializeNodejsEnv() {
     var Canvas = global['Canvas'] || global['HTMLCanvasElement'];

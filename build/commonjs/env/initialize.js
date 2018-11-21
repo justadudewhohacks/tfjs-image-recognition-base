@@ -1,10 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var isNodejs_1 = require("./isNodejs");
+var isBrowser_1 = require("./isBrowser");
 function initializeEnvironment() {
-    return isNodejs_1.isNodejs()
-        ? initializeNodejsEnv()
-        : initializeBrowserEnv();
+    if (isNodejs_1.isNodejs()) {
+        return initializeNodejsEnv();
+    }
+    if (isBrowser_1.isBrowser()) {
+        return initializeBrowserEnv();
+    }
+    return null;
 }
 exports.initializeEnvironment = initializeEnvironment;
 function initializeNodejsEnv() {

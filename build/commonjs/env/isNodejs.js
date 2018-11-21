@@ -1,7 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function isNodejs() {
-    return typeof module !== 'undefined' && !!module.exports
+    return typeof global === 'object'
+        && typeof require === 'function'
+        && typeof module !== 'undefined'
+        // issues with gatsby.js: module.exports is undefined
+        // && !!module.exports
         && typeof process !== 'undefined' && !!process.version;
 }
 exports.isNodejs = isNodejs;

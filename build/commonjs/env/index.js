@@ -7,10 +7,16 @@ function initialize() {
     environment = initialize_1.initializeEnvironment();
 }
 function getEnv() {
+    if (!environment) {
+        throw new Error('getEnv - environment is not defined, check isNodejs() and isBrowser()');
+    }
     return environment;
 }
 function monkeyPatch(env) {
     environment = environment || initialize_1.initializeEnvironment();
+    if (!environment) {
+        throw new Error('monkeyPatch - environment is not defined, check isNodejs() and isBrowser()');
+    }
     var _a = env.Canvas, Canvas = _a === void 0 ? environment.Canvas : _a, _b = env.Image, Image = _b === void 0 ? environment.Image : _b;
     environment.Canvas = Canvas;
     environment.Image = Image;
