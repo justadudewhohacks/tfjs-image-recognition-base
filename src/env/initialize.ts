@@ -1,10 +1,15 @@
 import { isNodejs } from './isNodejs';
 import { Environment } from './types';
+import { isBrowser } from './isBrowser';
 
-export function initializeEnvironment(): Environment {
-  return isNodejs()
-    ? initializeNodejsEnv()
-    : initializeBrowserEnv()
+export function initializeEnvironment(): Environment | null {
+  if (isNodejs()) {
+      return initializeNodejsEnv()
+  }
+  if (isBrowser()) {
+    return initializeBrowserEnv()
+  }
+  return null
 }
 
 function initializeNodejsEnv(): Environment {
