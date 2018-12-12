@@ -17,13 +17,13 @@
   "author": "justadudewhohacks",
   "license": "MIT",
   "dependencies": {
-    "@tensorflow/tfjs-core": "0.13.8",
+    "@tensorflow/tfjs-core": "0.14.2",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
-    "@tensorflow/tfjs-node": "^0.1.19",
+    "@tensorflow/tfjs-node": "^0.1.21",
     "@types/jasmine": "^2.8.8",
-    "@types/node": "^10.9.2",
+    "@types/node": "^10.12.12",
     "canvas": "^2.0.1",
     "jasmine": "^3.3.0",
     "jasmine-core": "^3.2.1",

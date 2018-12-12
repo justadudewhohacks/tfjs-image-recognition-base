@@ -11,7 +11,7 @@ export abstract class NeuralNetwork<TNetParams> {
   protected _params: TNetParams | undefined = undefined
   protected _paramMappings: ParamMapping[] = []
 
-  constructor(private _name: string) {}
+  constructor(protected _name: string) {}
 
   public get params(): TNetParams | undefined { return this._params }
   public get paramMappings(): ParamMapping[] { return this._paramMappings }
