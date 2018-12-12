@@ -119,6 +119,14 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
     return (new Box({ x: clippedX, y: clippedY, width: clippedWidth, height: clippedHeight})).floor()
   }
 
+  public shift(sx: number, sy: number): Box<BoxType> {
+    const { width, height } = this
+    const x = this.x + sx
+    const y = this.y + sy
+
+    return new Box({ x, y, width, height })
+  }
+
   public padAtBorders(imageHeight: number, imageWidth: number) {
     const w = this.width + 1
     const h = this.height + 1

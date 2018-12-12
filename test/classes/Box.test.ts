@@ -87,4 +87,21 @@ describe('BoundingBox', () => {
 
   })
 
+  describe('shift', () => {
+
+    it('should shift box by x, y', () => {
+
+      const box = new Box({ x: 10, y: 20, width: 20, height: 40 })
+
+      const shifted = box.shift(20, 40)
+
+      expect(shifted.x).toEqual(30)
+      expect(shifted.y).toEqual(60)
+      expect(shifted.width).toEqual(20)
+      expect(shifted.height).toEqual(40)
+
+    })
+
+  })
+
 })
