@@ -1,15 +1,17 @@
 import { isNodejs } from './isNodejs';
 import { isBrowser } from './isBrowser';
 export function initializeEnvironment() {
-    if (isNodejs()) {
-        return initializeNodejsEnv();
-    }
+    // check for isBrowser() first to prevent electron renderer process
+    // to be initialized with wrong environment due to isNodejs() returning true
     if (isBrowser()) {
         return initializeBrowserEnv();
     }
+    if (isNodejs()) {
+        return initializeNodejsEnv();
+    }
     return null;
 }
-function initializeNodejsEnv() {
+export function initializeNodejsEnv() {
     var Canvas = global['Canvas'] || global['HTMLCanvasElement'];
     var Image = global['Image'] || global['HTMLImageElement'];
     var createCanvasElement = function () {
@@ -72,7 +74,7 @@ function initializeNodejsEnv() {
         readFile: readFile
     };
 }
-function initializeBrowserEnv() {
+export function initializeBrowserEnv() {
     var fetch = window['fetch'] || function () {
         throw new Error('fetch - missing fetch implementation for browser environment');
     };

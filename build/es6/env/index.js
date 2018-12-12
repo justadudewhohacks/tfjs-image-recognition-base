@@ -1,4 +1,5 @@
-import { initializeEnvironment } from './initialize';
+import { initializeBrowserEnv, initializeEnvironment, initializeNodejsEnv } from './initialize';
+import { isBrowser } from './isBrowser';
 import { isNodejs } from './isNodejs';
 var environment;
 function initialize() {
@@ -28,7 +29,10 @@ function monkeyPatch(env) {
 export var env = {
     getEnv: getEnv,
     initialize: initialize,
+    initializeBrowserEnv: initializeBrowserEnv,
+    initializeNodejsEnv: initializeNodejsEnv,
     monkeyPatch: monkeyPatch,
+    isBrowser: isBrowser,
     isNodejs: isNodejs
 };
 initialize();

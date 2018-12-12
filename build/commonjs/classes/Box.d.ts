@@ -24,6 +24,7 @@ export declare class Box<BoxType = any> implements IBoundingBox, IRect {
     rescale(s: IDimensions | number): Box<BoxType>;
     pad(padX: number, padY: number): Box<BoxType>;
     clipAtImageBorders(imgWidth: number, imgHeight: number): Box<BoxType>;
+    shift(sx: number, sy: number): Box<BoxType>;
     padAtBorders(imageHeight: number, imageWidth: number): {
         dy: number;
         edy: number;

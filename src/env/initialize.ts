@@ -3,16 +3,18 @@ import { Environment } from './types';
 import { isBrowser } from './isBrowser';
 
 export function initializeEnvironment(): Environment | null {
-  if (isNodejs()) {
-      return initializeNodejsEnv()
-  }
+  // check for isBrowser() first to prevent electron renderer process
+  // to be initialized with wrong environment due to isNodejs() returning true
   if (isBrowser()) {
     return initializeBrowserEnv()
+  }
+  if (isNodejs()) {
+      return initializeNodejsEnv()
   }
   return null
 }
 
-function initializeNodejsEnv(): Environment {
+export function initializeNodejsEnv(): Environment {
 
   const Canvas = global['Canvas'] || global['HTMLCanvasElement']
   const Image = global['Image'] || global['HTMLImageElement']
@@ -66,7 +68,7 @@ function initializeNodejsEnv(): Environment {
   }
 }
 
-function initializeBrowserEnv(): Environment {
+export function initializeBrowserEnv(): Environment {
 
   const fetch = window['fetch'] || function() {
     throw new Error('fetch - missing fetch implementation for browser environment')

@@ -1,4 +1,5 @@
-import { initializeEnvironment } from './initialize';
+import { initializeBrowserEnv, initializeEnvironment, initializeNodejsEnv } from './initialize';
+import { isBrowser } from './isBrowser';
 import { isNodejs } from './isNodejs';
 import { Environment } from './types';
 
@@ -37,7 +38,10 @@ function monkeyPatch(env: Partial<Environment>) {
 export const env = {
   getEnv,
   initialize,
+  initializeBrowserEnv,
+  initializeNodejsEnv,
   monkeyPatch,
+  isBrowser,
   isNodejs
 }
 

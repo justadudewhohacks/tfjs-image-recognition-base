@@ -3,11 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var isNodejs_1 = require("./isNodejs");
 var isBrowser_1 = require("./isBrowser");
 function initializeEnvironment() {
-    if (isNodejs_1.isNodejs()) {
-        return initializeNodejsEnv();
-    }
+    // check for isBrowser() first to prevent electron renderer process
+    // to be initialized with wrong environment due to isNodejs() returning true
     if (isBrowser_1.isBrowser()) {
         return initializeBrowserEnv();
+    }
+    if (isNodejs_1.isNodejs()) {
+        return initializeNodejsEnv();
     }
     return null;
 }
@@ -75,6 +77,7 @@ function initializeNodejsEnv() {
         readFile: readFile
     };
 }
+exports.initializeNodejsEnv = initializeNodejsEnv;
 function initializeBrowserEnv() {
     var fetch = window['fetch'] || function () {
         throw new Error('fetch - missing fetch implementation for browser environment');
@@ -93,4 +96,5 @@ function initializeBrowserEnv() {
         readFile: readFile
     };
 }
+exports.initializeBrowserEnv = initializeBrowserEnv;
 //# sourceMappingURL=initialize.js.map

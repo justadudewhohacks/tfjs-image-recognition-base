@@ -128,6 +128,12 @@ var Box = /** @class */ (function () {
         var clippedHeight = Math.min(newHeight, imgHeight - clippedY);
         return (new Box({ x: clippedX, y: clippedY, width: clippedWidth, height: clippedHeight })).floor();
     };
+    Box.prototype.shift = function (sx, sy) {
+        var _a = this, width = _a.width, height = _a.height;
+        var x = this.x + sx;
+        var y = this.y + sy;
+        return new Box({ x: x, y: y, width: width, height: height });
+    };
     Box.prototype.padAtBorders = function (imageHeight, imageWidth) {
         var w = this.width + 1;
         var h = this.height + 1;

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var initialize_1 = require("./initialize");
+var isBrowser_1 = require("./isBrowser");
 var isNodejs_1 = require("./isNodejs");
 var environment;
 function initialize() {
@@ -30,7 +31,10 @@ function monkeyPatch(env) {
 exports.env = {
     getEnv: getEnv,
     initialize: initialize,
+    initializeBrowserEnv: initialize_1.initializeBrowserEnv,
+    initializeNodejsEnv: initialize_1.initializeNodejsEnv,
     monkeyPatch: monkeyPatch,
+    isBrowser: isBrowser_1.isBrowser,
     isNodejs: isNodejs_1.isNodejs
 };
 initialize();
