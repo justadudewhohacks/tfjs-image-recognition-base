@@ -1,18 +1,32 @@
-import { initializeBrowserEnv, initializeEnvironment, initializeNodejsEnv } from './initialize';
+import { createBrowserEnv } from './createBrowserEnv';
+import { createFileSystem } from './createFileSystem';
+import { createNodejsEnv } from './createNodejsEnv';
 import { isBrowser } from './isBrowser';
 import { isNodejs } from './isNodejs';
 var environment;
-function initialize() {
-    environment = initializeEnvironment();
-}
 function getEnv() {
     if (!environment) {
         throw new Error('getEnv - environment is not defined, check isNodejs() and isBrowser()');
     }
     return environment;
 }
+function setEnv(env) {
+    environment = env;
+}
+function initialize() {
+    // check for isBrowser() first to prevent electron renderer process
+    // to be initialized with wrong environment due to isNodejs() returning true
+    if (isBrowser()) {
+        setEnv(createBrowserEnv());
+    }
+    if (isNodejs()) {
+        setEnv(createNodejsEnv());
+    }
+}
 function monkeyPatch(env) {
-    environment = environment || initializeEnvironment();
+    if (!environment) {
+        initialize();
+    }
     if (!environment) {
         throw new Error('monkeyPatch - environment is not defined, check isNodejs() and isBrowser()');
     }
@@ -28,9 +42,11 @@ function monkeyPatch(env) {
 }
 export var env = {
     getEnv: getEnv,
+    setEnv: setEnv,
     initialize: initialize,
-    initializeBrowserEnv: initializeBrowserEnv,
-    initializeNodejsEnv: initializeNodejsEnv,
+    createBrowserEnv: createBrowserEnv,
+    createFileSystem: createFileSystem,
+    createNodejsEnv: createNodejsEnv,
     monkeyPatch: monkeyPatch,
     isBrowser: isBrowser,
     isNodejs: isNodejs

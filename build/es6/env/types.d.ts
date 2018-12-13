@@ -1,5 +1,8 @@
 /// <reference types="node" />
-export declare type Environment = {
+export declare type FileSystem = {
+    readFile: (filePath: string) => Promise<Buffer>;
+};
+export declare type Environment = FileSystem & {
     Canvas: typeof HTMLCanvasElement;
     Image: typeof HTMLImageElement;
     ImageData: typeof ImageData;
@@ -7,5 +10,4 @@ export declare type Environment = {
     createCanvasElement: () => HTMLCanvasElement;
     createImageElement: () => HTMLImageElement;
     fetch: (url: string, init?: RequestInit) => Promise<Response>;
-    readFile: (filePath: string) => Promise<Buffer>;
 };
