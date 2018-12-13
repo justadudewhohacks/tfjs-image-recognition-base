@@ -5,7 +5,6 @@ var tf = require("@tensorflow/tfjs-core");
 var getModelUris_1 = require("./common/getModelUris");
 var dom_1 = require("./dom");
 var env_1 = require("./env");
-var weightsLoaderFactory_1 = require("./weightsLoaderFactory");
 var NeuralNetwork = /** @class */ (function () {
     function NeuralNetwork(_name) {
         this._name = _name;
@@ -133,7 +132,7 @@ var NeuralNetwork = /** @class */ (function () {
                         readFile = env_1.env.getEnv().readFile;
                         _a = getModelUris_1.getModelUris(filePath, this.getDefaultModelName()), manifestUri = _a.manifestUri, modelBaseUri = _a.modelBaseUri;
                         fetchWeightsFromDisk = function (filePaths) { return Promise.all(filePaths.map(function (filePath) { return readFile(filePath).then(function (buf) { return buf.buffer; }); })); };
-                        loadWeights = weightsLoaderFactory_1.weightsLoaderFactory(fetchWeightsFromDisk);
+                        loadWeights = tf.io.weightsLoaderFactory(fetchWeightsFromDisk);
                         _c = (_b = JSON).parse;
                         return [4 /*yield*/, readFile(manifestUri)];
                     case 1:

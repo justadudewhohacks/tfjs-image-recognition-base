@@ -3,7 +3,6 @@ import * as tf from '@tensorflow/tfjs-core';
 import { getModelUris } from './common/getModelUris';
 import { loadWeightMap } from './dom';
 import { env } from './env';
-import { weightsLoaderFactory } from './weightsLoaderFactory';
 var NeuralNetwork = /** @class */ (function () {
     function NeuralNetwork(_name) {
         this._name = _name;
@@ -131,7 +130,7 @@ var NeuralNetwork = /** @class */ (function () {
                         readFile = env.getEnv().readFile;
                         _a = getModelUris(filePath, this.getDefaultModelName()), manifestUri = _a.manifestUri, modelBaseUri = _a.modelBaseUri;
                         fetchWeightsFromDisk = function (filePaths) { return Promise.all(filePaths.map(function (filePath) { return readFile(filePath).then(function (buf) { return buf.buffer; }); })); };
-                        loadWeights = weightsLoaderFactory(fetchWeightsFromDisk);
+                        loadWeights = tf.io.weightsLoaderFactory(fetchWeightsFromDisk);
                         _c = (_b = JSON).parse;
                         return [4 /*yield*/, readFile(manifestUri)];
                     case 1:
