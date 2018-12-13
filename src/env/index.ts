@@ -1,13 +1,11 @@
-import { initializeBrowserEnv, initializeEnvironment, initializeNodejsEnv } from './initialize';
+import { createBrowserEnv } from './createBrowserEnv';
+import { createFileSystem } from './createFileSystem';
+import { createNodejsEnv } from './createNodejsEnv';
 import { isBrowser } from './isBrowser';
 import { isNodejs } from './isNodejs';
 import { Environment } from './types';
 
 let environment: Environment | null
-
-function initialize() {
-  environment = initializeEnvironment()
-}
 
 function getEnv(): Environment {
   if (!environment) {
@@ -16,8 +14,25 @@ function getEnv(): Environment {
   return environment
 }
 
+function setEnv(env: Environment) {
+  environment = env
+}
+
+function initialize() {
+  // check for isBrowser() first to prevent electron renderer process
+  // to be initialized with wrong environment due to isNodejs() returning true
+  if (isBrowser()) {
+    setEnv(createBrowserEnv())
+  }
+  if (isNodejs()) {
+    setEnv(createNodejsEnv())
+  }
+}
+
 function monkeyPatch(env: Partial<Environment>) {
-  environment = environment || initializeEnvironment()
+  if (!environment) {
+    initialize()
+  }
 
   if (!environment) {
     throw new Error('monkeyPatch - environment is not defined, check isNodejs() and isBrowser()')
@@ -37,9 +52,11 @@ function monkeyPatch(env: Partial<Environment>) {
 
 export const env = {
   getEnv,
+  setEnv,
   initialize,
-  initializeBrowserEnv,
-  initializeNodejsEnv,
+  createBrowserEnv,
+  createFileSystem,
+  createNodejsEnv,
   monkeyPatch,
   isBrowser,
   isNodejs

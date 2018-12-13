@@ -1,4 +1,8 @@
-export type Environment = {
+export type FileSystem = {
+  readFile: (filePath: string) => Promise<Buffer>
+}
+
+export type Environment = FileSystem & {
   Canvas: typeof HTMLCanvasElement
   Image: typeof HTMLImageElement
   ImageData: typeof ImageData
@@ -6,5 +10,4 @@ export type Environment = {
   createCanvasElement: () => HTMLCanvasElement
   createImageElement: () => HTMLImageElement
   fetch: (url: string, init?: RequestInit) => Promise<Response>
-  readFile: (filePath: string) => Promise<Buffer>
 }
