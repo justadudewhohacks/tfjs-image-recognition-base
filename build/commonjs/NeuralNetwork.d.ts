@@ -31,7 +31,7 @@ export declare abstract class NeuralNetwork<TNetParams> {
     loadFromDisk(filePath: string | undefined): Promise<void>;
     loadFromWeightMap(weightMap: tf.NamedTensorMap): void;
     extractWeights(weights: Float32Array): void;
-    private traversePropertyPath(paramPath);
+    private traversePropertyPath;
     protected abstract getDefaultModelName(): string;
     protected abstract extractParamsFromWeigthMap(weightMap: tf.NamedTensorMap): {
         params: TNetParams;

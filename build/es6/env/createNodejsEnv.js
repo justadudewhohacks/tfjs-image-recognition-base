@@ -20,21 +20,21 @@ export function createNodejsEnv() {
     };
     var fileSystem = createFileSystem();
     return tslib_1.__assign({ Canvas: Canvas || /** @class */ (function () {
+            function Canvas() {
+            }
+            return Canvas;
+        }()), Image: Image || /** @class */ (function () {
+            function Image() {
+            }
+            return Image;
+        }()), ImageData: global['ImageData'] || /** @class */ (function () {
             function class_1() {
             }
             return class_1;
-        }()), Image: Image || /** @class */ (function () {
+        }()), Video: global['HTMLVideoElement'] || /** @class */ (function () {
             function class_2() {
             }
             return class_2;
-        }()), ImageData: global['ImageData'] || /** @class */ (function () {
-            function class_3() {
-            }
-            return class_3;
-        }()), Video: global['HTMLVideoElement'] || /** @class */ (function () {
-            function class_4() {
-            }
-            return class_4;
         }()), createCanvasElement: createCanvasElement,
         createImageElement: createImageElement,
         fetch: fetch }, fileSystem);

@@ -1,5 +1,10 @@
+export * from './convLayer';
 export * from './disposeUnusedWeightTensors';
+export * from './extractConvParamsFactory';
+export * from './extractFCParamsFactory';
+export * from './extractSeparableConvParamsFactory';
 export * from './extractWeightEntryFactory';
 export * from './extractWeightsFactory';
 export * from './getModelUris';
+export * from './types';
 //# sourceMappingURL=index.js.map

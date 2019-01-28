@@ -10,7 +10,7 @@ export declare function isFloat(num: number): boolean;
 export declare function isEven(num: number): boolean;
 export declare function round(num: number, prec?: number): number;
 export declare function isDimensions(obj: any): boolean;
-export declare function computeReshapedDimensions({width, height}: IDimensions, inputSize: number): Dimensions;
+export declare function computeReshapedDimensions({ width, height }: IDimensions, inputSize: number): Dimensions;
 export declare function getCenterPoint(pts: Point[]): Point;
 export declare function range(num: number, start: number, step: number): number[];
 export declare function isValidNumber(num: any): boolean;
