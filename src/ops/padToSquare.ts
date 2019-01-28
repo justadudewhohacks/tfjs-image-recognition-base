@@ -30,7 +30,7 @@ export function padToSquare(
     }
 
     const paddingTensorAppend = createPaddingTensor(paddingAmount)
-    const remainingPaddingAmount = dimDiff - paddingTensorAppend.shape[paddingAxis]
+    const remainingPaddingAmount = dimDiff - (paddingTensorAppend.shape[paddingAxis] as number)
 
     const paddingTensorPrepend = isCenterImage && remainingPaddingAmount
       ? createPaddingTensor(remainingPaddingAmount)

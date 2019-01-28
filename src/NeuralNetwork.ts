@@ -69,7 +69,7 @@ export abstract class NeuralNetwork<TNetParams> {
   public serializeParams(): Float32Array {
     return new Float32Array(
       this.getParamList()
-        .map(({ tensor }) => Array.from(tensor.dataSync()))
+        .map(({ tensor }) => Array.from(tensor.dataSync()) as number[])
         .reduce((flat, arr) => flat.concat(arr))
     )
   }
