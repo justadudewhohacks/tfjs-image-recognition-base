@@ -22,8 +22,7 @@
     "typeRoots": [
       "typings",
       "node_modules/@types"
-    ],
-    "baseUrl": "."
+    ]
   },
   "formatCodeOptions": {
     "indentSize": 2,

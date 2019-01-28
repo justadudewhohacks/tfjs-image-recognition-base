@@ -1,7 +1,11 @@
-export * from './classes';
-export * from './common';
-export * from './dom';
-export * from './env';
-export * from './ops';
+import * as TfjsImageRecognitionBase from './tfjsImageRecognitionBase';
+
+export * from './classes/index';
+export * from './dom/index';
+export * from './env/index';
+export * from './ops/index';
 export * from './utils';
 export * from './NeuralNetwork';
+
+// modules, which are not to be reexported
+export { TfjsImageRecognitionBase }
