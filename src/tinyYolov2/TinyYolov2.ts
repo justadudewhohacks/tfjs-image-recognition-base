@@ -128,7 +128,7 @@ export class TinyYolov2 extends NeuralNetwork<TinyYolov2NetParams> {
       height: netInput.getInputHeight(0)
     }
 
-    const results = this.extractBoxes(out0, netInput.getReshapedInputDimensions(0), scoreThreshold)
+    const results = await this.extractBoxes(out0, netInput.getReshapedInputDimensions(0), scoreThreshold)
     out.dispose()
     out0.dispose()
 
@@ -175,7 +175,7 @@ export class TinyYolov2 extends NeuralNetwork<TinyYolov2NetParams> {
     return extractParams(weights, this.config, this.boxEncodingSize, filterSizes)
   }
 
-  protected extractBoxes(
+  protected async extractBoxes(
     outputTensor: tf.Tensor4D,
     inputBlobDimensions: Dimensions,
     scoreThreshold?: number
@@ -202,22 +202,25 @@ export class TinyYolov2 extends NeuralNetwork<TinyYolov2NetParams> {
 
     const results = []
 
+    const scoresData = await scoresTensor.array()
+    const boxesData = await boxesTensor.array()
     for (let row = 0; row < numCells; row ++) {
       for (let col = 0; col < numCells; col ++) {
         for (let anchor = 0; anchor < numBoxes; anchor ++) {
-          const score = sigmoid(scoresTensor.get(row, col, anchor, 0))
+
+          const score = sigmoid(scoresData[row][col][anchor][0]);
           if (!scoreThreshold || score > scoreThreshold) {
-            const ctX = ((col + sigmoid(boxesTensor.get(row, col, anchor, 0))) / numCells) * correctionFactorX
-            const ctY = ((row + sigmoid(boxesTensor.get(row, col, anchor, 1))) / numCells) * correctionFactorY
-            const width = ((Math.exp(boxesTensor.get(row, col, anchor, 2)) * this.config.anchors[anchor].x) / numCells) * correctionFactorX
-            const height = ((Math.exp(boxesTensor.get(row, col, anchor, 3)) * this.config.anchors[anchor].y) / numCells) * correctionFactorY
+            const ctX = ((col + sigmoid(boxesData[row][col][anchor][0])) / numCells) * correctionFactorX
+            const ctY = ((row + sigmoid(boxesData[row][col][anchor][1])) / numCells) * correctionFactorY
+            const width = ((Math.exp(boxesData[row][col][anchor][2]) * this.config.anchors[anchor].x) / numCells) * correctionFactorX
+            const height = ((Math.exp(boxesData[row][col][anchor][3]) * this.config.anchors[anchor].y) / numCells) * correctionFactorY
 
             const x = (ctX - (width / 2))
             const y = (ctY - (height / 2))
 
             const pos = { row, col, anchor }
             const { classScore, label } = this.withClassScores
-              ? this.extractPredictedClass(classScoresTensor as tf.Tensor4D, pos)
+              ? await this.extractPredictedClass(classScoresTensor as tf.Tensor4D, pos)
               : { classScore: 1, label: 0 }
 
             results.push({
@@ -239,10 +242,11 @@ export class TinyYolov2 extends NeuralNetwork<TinyYolov2NetParams> {
     return results
   }
 
-  private extractPredictedClass(classesTensor: tf.Tensor4D, pos: { row: number, col: number, anchor: number }) {
+  private async extractPredictedClass(classesTensor: tf.Tensor4D, pos: { row: number, col: number, anchor: number },) {
     const { row, col, anchor } = pos
+    const classesData = await classesTensor.array()
     return Array(this.config.classes.length).fill(0)
-      .map((_, i) => classesTensor.get(row, col, anchor, i))
+      .map((_, i) => classesData[row][col][anchor][i])
       .map((classScore, label) => ({
         classScore,
         label

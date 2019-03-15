@@ -139,7 +139,7 @@ export class NetInput {
         }
 
         if (input instanceof env.getEnv().Canvas) {
-          return tf.fromPixels(imageToSquare(input, inputSize, isCenterInputs))
+          return tf.browser.fromPixels(imageToSquare(input, inputSize, isCenterInputs))
         }
 
         throw new Error(`toBatchTensor - at batchIdx ${batchIdx}, expected input to be instanceof tf.Tensor or instanceof HTMLCanvasElement, instead have ${input}`)
