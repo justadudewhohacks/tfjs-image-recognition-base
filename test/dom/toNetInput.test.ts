@@ -96,7 +96,7 @@ describe('toNetInput', () => {
   describe('no memory leaks', () => {
 
     it('constructor', async () => {
-      const tensors = [imgEl, imgEl, imgEl].map(el => tf.fromPixels(createCanvasFromMedia(el)))
+      const tensors = [imgEl, imgEl, imgEl].map(el => tf.browser.fromPixels(createCanvasFromMedia(el)))
       const tensor4ds = tensors.map(t => t.expandDims<tf.Rank.R4>())
 
       await expectAllTensorsReleased(async () => {
