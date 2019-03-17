@@ -11,7 +11,7 @@ export function imageTensorToCanvas(imgTensor, canvas) {
                     targetCanvas = canvas || env.getEnv().createCanvasElement();
                     _a = imgTensor.shape.slice(isTensor4D(imgTensor) ? 1 : 0), height = _a[0], width = _a[1], numChannels = _a[2];
                     imgTensor3D = tf.tidy(function () { return imgTensor.as3D(height, width, numChannels).toInt(); });
-                    return [4 /*yield*/, tf.toPixels(imgTensor3D, targetCanvas)];
+                    return [4 /*yield*/, tf.browser.toPixels(imgTensor3D, targetCanvas)];
                 case 1:
                     _b.sent();
                     imgTensor3D.dispose();

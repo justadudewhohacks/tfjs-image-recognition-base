@@ -134,7 +134,7 @@ var NetInput = /** @class */ (function () {
                     return imgTensor.as3D(inputSize, inputSize, 3);
                 }
                 if (input instanceof env_1.env.getEnv().Canvas) {
-                    return tf.fromPixels(imageToSquare_1.imageToSquare(input, inputSize, isCenterInputs));
+                    return tf.browser.fromPixels(imageToSquare_1.imageToSquare(input, inputSize, isCenterInputs));
                 }
                 throw new Error("toBatchTensor - at batchIdx " + batchIdx + ", expected input to be instanceof tf.Tensor or instanceof HTMLCanvasElement, instead have " + input);
             });

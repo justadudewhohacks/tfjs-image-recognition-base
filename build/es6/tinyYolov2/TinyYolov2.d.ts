@@ -29,7 +29,7 @@ export declare class TinyYolov2 extends NeuralNetwork<TinyYolov2NetParams> {
         params: TinyYolov2NetParams;
         paramMappings: import("../common").ParamMapping[];
     };
-    protected extractBoxes(outputTensor: tf.Tensor4D, inputBlobDimensions: Dimensions, scoreThreshold?: number): {
+    protected extractBoxes(outputTensor: tf.Tensor4D, inputBlobDimensions: Dimensions, scoreThreshold?: number): Promise<{
         row: number;
         col: number;
         anchor: number;
@@ -37,6 +37,6 @@ export declare class TinyYolov2 extends NeuralNetwork<TinyYolov2NetParams> {
         score: number;
         classScore: number;
         label: number;
-    }[];
+    }[]>;
     private extractPredictedClass;
 }

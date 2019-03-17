@@ -131,7 +131,9 @@ var TinyYolov2 = /** @class */ (function (_super) {
                             width: netInput.getInputWidth(0),
                             height: netInput.getInputHeight(0)
                         };
-                        results = this.extractBoxes(out0, netInput.getReshapedInputDimensions(0), scoreThreshold);
+                        return [4 /*yield*/, this.extractBoxes(out0, netInput.getReshapedInputDimensions(0), scoreThreshold)];
+                    case 3:
+                        results = _b.sent();
                         out.dispose();
                         out0.dispose();
                         boxes = results.map(function (res) { return res.box; });
@@ -162,57 +164,105 @@ var TinyYolov2 = /** @class */ (function (_super) {
         return extractParams(weights, this.config, this.boxEncodingSize, filterSizes);
     };
     TinyYolov2.prototype.extractBoxes = function (outputTensor, inputBlobDimensions, scoreThreshold) {
-        var _this = this;
-        var width = inputBlobDimensions.width, height = inputBlobDimensions.height;
-        var inputSize = Math.max(width, height);
-        var correctionFactorX = inputSize / width;
-        var correctionFactorY = inputSize / height;
-        var numCells = outputTensor.shape[1];
-        var numBoxes = this.config.anchors.length;
-        var _a = tf.tidy(function () {
-            var reshaped = outputTensor.reshape([numCells, numCells, numBoxes, _this.boxEncodingSize]);
-            var boxes = reshaped.slice([0, 0, 0, 0], [numCells, numCells, numBoxes, 4]);
-            var scores = reshaped.slice([0, 0, 0, 4], [numCells, numCells, numBoxes, 1]);
-            var classScores = _this.withClassScores
-                ? tf.softmax(reshaped.slice([0, 0, 0, 5], [numCells, numCells, numBoxes, _this.config.classes.length]), 3)
-                : tf.scalar(0);
-            return [boxes, scores, classScores];
-        }), boxesTensor = _a[0], scoresTensor = _a[1], classScoresTensor = _a[2];
-        var results = [];
-        for (var row = 0; row < numCells; row++) {
-            for (var col = 0; col < numCells; col++) {
-                for (var anchor = 0; anchor < numBoxes; anchor++) {
-                    var score = sigmoid(scoresTensor.get(row, col, anchor, 0));
-                    if (!scoreThreshold || score > scoreThreshold) {
-                        var ctX = ((col + sigmoid(boxesTensor.get(row, col, anchor, 0))) / numCells) * correctionFactorX;
-                        var ctY = ((row + sigmoid(boxesTensor.get(row, col, anchor, 1))) / numCells) * correctionFactorY;
-                        var width_1 = ((Math.exp(boxesTensor.get(row, col, anchor, 2)) * this.config.anchors[anchor].x) / numCells) * correctionFactorX;
-                        var height_1 = ((Math.exp(boxesTensor.get(row, col, anchor, 3)) * this.config.anchors[anchor].y) / numCells) * correctionFactorY;
-                        var x = (ctX - (width_1 / 2));
-                        var y = (ctY - (height_1 / 2));
-                        var pos = { row: row, col: col, anchor: anchor };
-                        var _b = this.withClassScores
-                            ? this.extractPredictedClass(classScoresTensor, pos)
-                            : { classScore: 1, label: 0 }, classScore = _b.classScore, label = _b.label;
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var width, height, inputSize, correctionFactorX, correctionFactorY, numCells, numBoxes, _a, boxesTensor, scoresTensor, classScoresTensor, results, scoresData, boxesData, row, col, anchor, score, ctX, ctY, width_1, height_1, x, y, pos, _b, classScore, label, _c;
+            var _this = this;
+            return tslib_1.__generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        width = inputBlobDimensions.width, height = inputBlobDimensions.height;
+                        inputSize = Math.max(width, height);
+                        correctionFactorX = inputSize / width;
+                        correctionFactorY = inputSize / height;
+                        numCells = outputTensor.shape[1];
+                        numBoxes = this.config.anchors.length;
+                        _a = tf.tidy(function () {
+                            var reshaped = outputTensor.reshape([numCells, numCells, numBoxes, _this.boxEncodingSize]);
+                            var boxes = reshaped.slice([0, 0, 0, 0], [numCells, numCells, numBoxes, 4]);
+                            var scores = reshaped.slice([0, 0, 0, 4], [numCells, numCells, numBoxes, 1]);
+                            var classScores = _this.withClassScores
+                                ? tf.softmax(reshaped.slice([0, 0, 0, 5], [numCells, numCells, numBoxes, _this.config.classes.length]), 3)
+                                : tf.scalar(0);
+                            return [boxes, scores, classScores];
+                        }), boxesTensor = _a[0], scoresTensor = _a[1], classScoresTensor = _a[2];
+                        results = [];
+                        return [4 /*yield*/, scoresTensor.array()];
+                    case 1:
+                        scoresData = _d.sent();
+                        return [4 /*yield*/, boxesTensor.array()];
+                    case 2:
+                        boxesData = _d.sent();
+                        row = 0;
+                        _d.label = 3;
+                    case 3:
+                        if (!(row < numCells)) return [3 /*break*/, 12];
+                        col = 0;
+                        _d.label = 4;
+                    case 4:
+                        if (!(col < numCells)) return [3 /*break*/, 11];
+                        anchor = 0;
+                        _d.label = 5;
+                    case 5:
+                        if (!(anchor < numBoxes)) return [3 /*break*/, 10];
+                        score = sigmoid(scoresData[row][col][anchor][0]);
+                        if (!(!scoreThreshold || score > scoreThreshold)) return [3 /*break*/, 9];
+                        ctX = ((col + sigmoid(boxesData[row][col][anchor][0])) / numCells) * correctionFactorX;
+                        ctY = ((row + sigmoid(boxesData[row][col][anchor][1])) / numCells) * correctionFactorY;
+                        width_1 = ((Math.exp(boxesData[row][col][anchor][2]) * this.config.anchors[anchor].x) / numCells) * correctionFactorX;
+                        height_1 = ((Math.exp(boxesData[row][col][anchor][3]) * this.config.anchors[anchor].y) / numCells) * correctionFactorY;
+                        x = (ctX - (width_1 / 2));
+                        y = (ctY - (height_1 / 2));
+                        pos = { row: row, col: col, anchor: anchor };
+                        if (!this.withClassScores) return [3 /*break*/, 7];
+                        return [4 /*yield*/, this.extractPredictedClass(classScoresTensor, pos)];
+                    case 6:
+                        _c = _d.sent();
+                        return [3 /*break*/, 8];
+                    case 7:
+                        _c = { classScore: 1, label: 0 };
+                        _d.label = 8;
+                    case 8:
+                        _b = _c, classScore = _b.classScore, label = _b.label;
                         results.push(tslib_1.__assign({ box: new BoundingBox(x, y, x + width_1, y + height_1), score: score, classScore: score * classScore, label: label }, pos));
-                    }
+                        _d.label = 9;
+                    case 9:
+                        anchor++;
+                        return [3 /*break*/, 5];
+                    case 10:
+                        col++;
+                        return [3 /*break*/, 4];
+                    case 11:
+                        row++;
+                        return [3 /*break*/, 3];
+                    case 12:
+                        boxesTensor.dispose();
+                        scoresTensor.dispose();
+                        classScoresTensor.dispose();
+                        return [2 /*return*/, results];
                 }
-            }
-        }
-        boxesTensor.dispose();
-        scoresTensor.dispose();
-        classScoresTensor.dispose();
-        return results;
+            });
+        });
     };
     TinyYolov2.prototype.extractPredictedClass = function (classesTensor, pos) {
-        var row = pos.row, col = pos.col, anchor = pos.anchor;
-        return Array(this.config.classes.length).fill(0)
-            .map(function (_, i) { return classesTensor.get(row, col, anchor, i); })
-            .map(function (classScore, label) { return ({
-            classScore: classScore,
-            label: label
-        }); })
-            .reduce(function (max, curr) { return max.classScore > curr.classScore ? max : curr; });
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var row, col, anchor, classesData;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        row = pos.row, col = pos.col, anchor = pos.anchor;
+                        return [4 /*yield*/, classesTensor.array()];
+                    case 1:
+                        classesData = _a.sent();
+                        return [2 /*return*/, Array(this.config.classes.length).fill(0)
+                                .map(function (_, i) { return classesData[row][col][anchor][i]; })
+                                .map(function (classScore, label) { return ({
+                                classScore: classScore,
+                                label: label
+                            }); })
+                                .reduce(function (max, curr) { return max.classScore > curr.classScore ? max : curr; })];
+                }
+            });
+        });
     };
     TinyYolov2.DEFAULT_FILTER_SIZES = [
         3, 16, 32, 64, 128, 256, 512, 1024, 1024
