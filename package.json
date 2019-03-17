@@ -22,16 +22,16 @@
   },
   "devDependencies": {
     "@tensorflow/tfjs-node": "^1.0.1",
-    "@types/jasmine": "^3.3.8",
-    "@types/node": "^10.12.18",
+    "@types/jasmine": "^3.3.10",
+    "@types/node": "^11.11.3",
     "canvas": "2.0.1",
     "jasmine": "^3.3.1",
     "jasmine-core": "^3.3.0",
-    "karma": "^4.0.0",
+    "karma": "^4.0.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^2.0.1",
-    "karma-typescript": "^3.0.12",
-    "ts-node": "^8.0.2",
-    "typescript": "^3.2.4"
+    "karma-typescript": "^4.0.0",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333"
   }
 }
