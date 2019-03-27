@@ -1,6 +1,6 @@
 {
   "name": "tfjs-image-recognition-base",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A shared codebase for face-api.js and tfjs-tiny-yolo-v2.",
   "module": "./build/es6/index.js",
   "main": "./build/commonjs/index.js",
