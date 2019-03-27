@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var env_1 = require("../env");
+var Blob = require('blob');
 function bufferToImage(buf) {
     return new Promise(function (resolve, reject) {
         if (!(buf instanceof Blob)) {

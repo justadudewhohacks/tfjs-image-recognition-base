@@ -1,5 +1,5 @@
-import { env } from '../env';
-
+import { env } from '../env'
+var Blob = require('blob')
 export function bufferToImage(buf: Blob): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     if (!(buf instanceof Blob)) {
@@ -9,7 +9,9 @@ export function bufferToImage(buf: Blob): Promise<HTMLImageElement> {
     const reader = new FileReader()
     reader.onload = () => {
       if (typeof reader.result !== 'string') {
-        return reject('bufferToImage - expected reader.result to be a string, in onload')
+        return reject(
+          'bufferToImage - expected reader.result to be a string, in onload'
+        )
       }
 
       const img = env.getEnv().createImageElement()

@@ -1,4 +1,5 @@
 import { env } from '../env';
+var Blob = require('blob');
 export function bufferToImage(buf) {
     return new Promise(function (resolve, reject) {
         if (!(buf instanceof Blob)) {
