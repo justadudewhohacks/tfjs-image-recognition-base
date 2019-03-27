@@ -9,4 +9,11 @@ export declare type TinyYolov2Config = {
     filterSizes?: number[];
     isFirstLayerConv2d?: boolean;
 };
+export declare type TinyYolov2TrainableConfig = TinyYolov2Config & {
+    noObjectScale: number;
+    objectScale: number;
+    coordScale: number;
+    classScale: number;
+};
 export declare function validateConfig(config: any): void;
+export declare function validateTrainConfig(config: any): TinyYolov2TrainableConfig;
