@@ -23,18 +23,22 @@ export function createNodejsEnv() {
             function Canvas() {
             }
             return Canvas;
+        }()), CanvasRenderingContext2D: global['CanvasRenderingContext2D'] || /** @class */ (function () {
+            function class_1() {
+            }
+            return class_1;
         }()), Image: Image || /** @class */ (function () {
             function Image() {
             }
             return Image;
         }()), ImageData: global['ImageData'] || /** @class */ (function () {
-            function class_1() {
-            }
-            return class_1;
-        }()), Video: global['HTMLVideoElement'] || /** @class */ (function () {
             function class_2() {
             }
             return class_2;
+        }()), Video: global['HTMLVideoElement'] || /** @class */ (function () {
+            function class_3() {
+            }
+            return class_3;
         }()), createCanvasElement: createCanvasElement,
         createImageElement: createImageElement,
         fetch: fetch }, fileSystem);

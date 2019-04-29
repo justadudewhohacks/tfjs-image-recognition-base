@@ -1,1 +1,1 @@
-export declare function getContext2dOrThrow(canvas: HTMLCanvasElement): CanvasRenderingContext2D;
+export declare function getContext2dOrThrow(canvasArg: string | HTMLCanvasElement | CanvasRenderingContext2D): CanvasRenderingContext2D;

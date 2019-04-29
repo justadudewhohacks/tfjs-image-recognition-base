@@ -4,6 +4,7 @@ export function isBrowser() {
         && typeof HTMLImageElement !== 'undefined'
         && typeof HTMLCanvasElement !== 'undefined'
         && typeof HTMLVideoElement !== 'undefined'
-        && typeof ImageData !== 'undefined';
+        && typeof ImageData !== 'undefined'
+        && typeof CanvasRenderingContext2D !== 'undefined';
 }
 //# sourceMappingURL=isBrowser.js.map

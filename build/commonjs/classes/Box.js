@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = require("../utils");
+var Point_1 = require("./Point");
 var Box = /** @class */ (function () {
-    // TODO: MTCNN boxes sometimes have negative widths or heights, figure out why and remove
-    // allowNegativeDimensions flag again
     function Box(_box, allowNegativeDimensions) {
-        if (allowNegativeDimensions === void 0) { allowNegativeDimensions = false; }
+        if (allowNegativeDimensions === void 0) { allowNegativeDimensions = true; }
         var box = (_box || {});
         var isBbox = [box.left, box.top, box.right, box.bottom].every(utils_1.isValidNumber);
         var isRect = [box.x, box.y, box.width, box.height].every(utils_1.isValidNumber);
@@ -75,6 +74,26 @@ var Box = /** @class */ (function () {
     });
     Object.defineProperty(Box.prototype, "area", {
         get: function () { return this.width * this.height; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Box.prototype, "topLeft", {
+        get: function () { return new Point_1.Point(this.left, this.top); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Box.prototype, "topRight", {
+        get: function () { return new Point_1.Point(this.right, this.top); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Box.prototype, "bottomLeft", {
+        get: function () { return new Point_1.Point(this.left, this.bottom); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Box.prototype, "bottomRight", {
+        get: function () { return new Point_1.Point(this.right, this.bottom); },
         enumerable: true,
         configurable: true
     });

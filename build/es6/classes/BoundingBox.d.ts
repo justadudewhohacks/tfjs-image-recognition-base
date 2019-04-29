@@ -6,5 +6,5 @@ export interface IBoundingBox {
     bottom: number;
 }
 export declare class BoundingBox extends Box<BoundingBox> implements IBoundingBox {
-    constructor(left: number, top: number, right: number, bottom: number);
+    constructor(left: number, top: number, right: number, bottom: number, allowNegativeDimensions?: boolean);
 }

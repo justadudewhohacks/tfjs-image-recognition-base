@@ -4,6 +4,7 @@ export declare type FileSystem = {
 };
 export declare type Environment = FileSystem & {
     Canvas: typeof HTMLCanvasElement;
+    CanvasRenderingContext2D: typeof CanvasRenderingContext2D;
     Image: typeof HTMLImageElement;
     ImageData: typeof ImageData;
     Video: typeof HTMLVideoElement;

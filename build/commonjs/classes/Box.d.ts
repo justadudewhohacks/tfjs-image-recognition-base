@@ -1,6 +1,7 @@
 import { IBoundingBox } from './BoundingBox';
-import { IRect } from './Rect';
 import { IDimensions } from './Dimensions';
+import { Point } from './Point';
+import { IRect } from './Rect';
 export declare class Box<BoxType = any> implements IBoundingBox, IRect {
     static isRect(rect: any): boolean;
     static assertIsValidBox(box: any, callee: string, allowNegativeDimensions?: boolean): void;
@@ -18,6 +19,10 @@ export declare class Box<BoxType = any> implements IBoundingBox, IRect {
     readonly right: number;
     readonly bottom: number;
     readonly area: number;
+    readonly topLeft: Point;
+    readonly topRight: Point;
+    readonly bottomLeft: Point;
+    readonly bottomRight: Point;
     round(): Box<BoxType>;
     floor(): Box<BoxType>;
     toSquare(): Box<BoxType>;

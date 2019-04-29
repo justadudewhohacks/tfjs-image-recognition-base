@@ -6,7 +6,8 @@ function isBrowser() {
         && typeof HTMLImageElement !== 'undefined'
         && typeof HTMLCanvasElement !== 'undefined'
         && typeof HTMLVideoElement !== 'undefined'
-        && typeof ImageData !== 'undefined';
+        && typeof ImageData !== 'undefined'
+        && typeof CanvasRenderingContext2D !== 'undefined';
 }
 exports.isBrowser = isBrowser;
 //# sourceMappingURL=isBrowser.js.map
