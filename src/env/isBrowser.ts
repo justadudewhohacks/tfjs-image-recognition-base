@@ -5,4 +5,5 @@ export function isBrowser(): boolean {
     && typeof HTMLCanvasElement !== 'undefined'
     && typeof HTMLVideoElement !== 'undefined'
     && typeof ImageData !== 'undefined'
+    && typeof CanvasRenderingContext2D !== 'undefined'
 }

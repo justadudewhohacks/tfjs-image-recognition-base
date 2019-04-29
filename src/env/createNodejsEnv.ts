@@ -28,6 +28,7 @@ export function createNodejsEnv(): Environment {
 
   return {
     Canvas: Canvas || class {},
+    CanvasRenderingContext2D: global['CanvasRenderingContext2D'] || class {},
     Image: Image || class {},
     ImageData: global['ImageData'] || class {},
     Video: global['HTMLVideoElement'] || class {},

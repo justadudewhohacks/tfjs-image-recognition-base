@@ -30,8 +30,8 @@ describe('Rect', () => {
     })
 
     it('throws if height or width invalid', () => {
-      expect(() => new Rect(0, 10, -20, 30)).toThrowError('Box.constructor - width (-20) and height (30) must be positive numbers')
-      expect(() => new Rect(0, 10, 20, -30)).toThrowError('Box.constructor - width (20) and height (-30) must be positive numbers')
+      expect(() => new Rect(0, 10, -20, 30, false)).toThrowError('Box.constructor - width (-20) and height (30) must be positive numbers')
+      expect(() => new Rect(0, 10, 20, -30, false)).toThrowError('Box.constructor - width (20) and height (-30) must be positive numbers')
     })
 
     it('properties', () => {

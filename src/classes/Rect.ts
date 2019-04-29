@@ -8,7 +8,7 @@ export interface IRect {
 }
 
 export class Rect extends Box<Rect> implements IRect {
-  constructor(x: number, y: number, width: number, height: number) {
-    super({ x, y, width, height })
+  constructor(x: number, y: number, width: number, height: number, allowNegativeDimensions: boolean = false) {
+    super({ x, y, width, height }, allowNegativeDimensions)
   }
 }

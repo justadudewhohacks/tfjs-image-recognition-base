@@ -12,6 +12,7 @@ export function createBrowserEnv(): Environment {
 
   return {
     Canvas: HTMLCanvasElement,
+    CanvasRenderingContext2D: CanvasRenderingContext2D,
     Image: HTMLImageElement,
     ImageData: ImageData,
     Video: HTMLVideoElement,

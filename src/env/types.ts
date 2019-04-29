@@ -4,6 +4,7 @@ export type FileSystem = {
 
 export type Environment = FileSystem & {
   Canvas: typeof HTMLCanvasElement
+  CanvasRenderingContext2D: typeof CanvasRenderingContext2D
   Image: typeof HTMLImageElement
   ImageData: typeof ImageData
   Video: typeof HTMLVideoElement

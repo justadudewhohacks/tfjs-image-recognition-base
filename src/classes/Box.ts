@@ -1,7 +1,8 @@
 import { isDimensions, isValidNumber } from '../utils';
 import { IBoundingBox } from './BoundingBox';
-import { IRect } from './Rect';
 import { IDimensions } from './Dimensions';
+import { Point } from './Point';
+import { IRect } from './Rect';
 
 export class Box<BoxType = any> implements IBoundingBox, IRect {
 
@@ -24,9 +25,7 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
   private _width: number
   private _height: number
 
-  // TODO: MTCNN boxes sometimes have negative widths or heights, figure out why and remove
-  // allowNegativeDimensions flag again
-  constructor(_box: IBoundingBox | IRect, allowNegativeDimensions: boolean = false) {
+  constructor(_box: IBoundingBox | IRect, allowNegativeDimensions: boolean = true) {
     const box = (_box || {}) as any
 
     const isBbox = [box.left, box.top, box.right, box.bottom].every(isValidNumber)
@@ -57,6 +56,10 @@ export class Box<BoxType = any> implements IBoundingBox, IRect {
   public get right(): number { return this.x + this.width }
   public get bottom(): number { return this.y + this.height }
   public get area(): number { return this.width * this.height }
+  public get topLeft(): Point { return new Point(this.left, this.top) }
+  public get topRight(): Point { return new Point(this.right, this.top) }
+  public get bottomLeft(): Point { return new Point(this.left, this.bottom) }
+  public get bottomRight(): Point { return new Point(this.right, this.bottom) }
 
   public round(): Box<BoxType> {
     const [x, y, width, height] = [this.x, this.y, this.width, this.height]

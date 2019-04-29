@@ -1,6 +1,5 @@
 export * from './BoundingBox'
 export * from './Box'
-export * from './BoxWithText'
 export * from './Dimensions'
 export * from './LabeledBox'
 export * from './ObjectDetection'
