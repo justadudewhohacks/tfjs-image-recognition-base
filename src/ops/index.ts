@@ -1,4 +1,5 @@
 export * from './iou'
+export * from './minBbox'
 export * from './nonMaxSuppression'
 export * from './normalize'
 export * from './padToSquare'
