@@ -6,8 +6,8 @@ import { createCanvasFromMedia } from './createCanvas';
 import { imageToSquare } from './imageToSquare';
 var NetInput = /** @class */ (function () {
     function NetInput(inputs, treatAsBatchInput) {
-        if (treatAsBatchInput === void 0) { treatAsBatchInput = false; }
         var _this = this;
+        if (treatAsBatchInput === void 0) { treatAsBatchInput = false; }
         this._imageTensors = [];
         this._canvases = [];
         this._treatAsBatchInput = false;

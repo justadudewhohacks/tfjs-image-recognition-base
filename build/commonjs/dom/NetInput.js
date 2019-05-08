@@ -8,8 +8,8 @@ var createCanvas_1 = require("./createCanvas");
 var imageToSquare_1 = require("./imageToSquare");
 var NetInput = /** @class */ (function () {
     function NetInput(inputs, treatAsBatchInput) {
-        if (treatAsBatchInput === void 0) { treatAsBatchInput = false; }
         var _this = this;
+        if (treatAsBatchInput === void 0) { treatAsBatchInput = false; }
         this._imageTensors = [];
         this._canvases = [];
         this._treatAsBatchInput = false;
