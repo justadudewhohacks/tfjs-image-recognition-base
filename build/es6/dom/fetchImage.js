@@ -1,10 +1,10 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __generator } from "tslib";
 import { bufferToImage } from './bufferToImage';
 import { fetchOrThrow } from './fetchOrThrow';
 export function fetchImage(uri) {
-    return tslib_1.__awaiter(this, void 0, void 0, function () {
+    return __awaiter(this, void 0, void 0, function () {
         var res, blob;
-        return tslib_1.__generator(this, function (_a) {
+        return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, fetchOrThrow(uri)];
                 case 1:

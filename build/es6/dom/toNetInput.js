@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __generator } from "tslib";
 import { isTensor3D, isTensor4D } from '../utils';
 import { awaitMediaLoaded } from './awaitMediaLoaded';
 import { isMediaElement } from './isMediaElement';
@@ -12,9 +12,9 @@ import { resolveInput } from './resolveInput';
  * @returns A NetInput instance, which can be passed into one of the neural networks.
  */
 export function toNetInput(inputs) {
-    return tslib_1.__awaiter(this, void 0, void 0, function () {
+    return __awaiter(this, void 0, void 0, function () {
         var inputArgArray, getIdxHint, inputArray;
-        return tslib_1.__generator(this, function (_a) {
+        return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (inputs instanceof NetInput) {

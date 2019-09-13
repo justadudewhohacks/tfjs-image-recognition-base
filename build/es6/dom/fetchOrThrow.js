@@ -1,9 +1,9 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __generator } from "tslib";
 import { env } from '../env';
 export function fetchOrThrow(url, init) {
-    return tslib_1.__awaiter(this, void 0, void 0, function () {
+    return __awaiter(this, void 0, void 0, function () {
         var fetch, res;
-        return tslib_1.__generator(this, function (_a) {
+        return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     fetch = env.getEnv().fetch;

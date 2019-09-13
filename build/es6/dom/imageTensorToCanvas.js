@@ -1,11 +1,11 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __generator } from "tslib";
 import * as tf from '@tensorflow/tfjs-core';
 import { env } from '../env';
 import { isTensor4D } from '../utils';
 export function imageTensorToCanvas(imgTensor, canvas) {
-    return tslib_1.__awaiter(this, void 0, void 0, function () {
+    return __awaiter(this, void 0, void 0, function () {
         var targetCanvas, _a, height, width, numChannels, imgTensor3D;
-        return tslib_1.__generator(this, function (_b) {
+        return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     targetCanvas = canvas || env.getEnv().createCanvasElement();

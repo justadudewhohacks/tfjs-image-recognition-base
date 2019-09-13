@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __assign } from "tslib";
 import { createFileSystem } from './createFileSystem';
 export function createNodejsEnv() {
     var Canvas = global['Canvas'] || global['HTMLCanvasElement'];
@@ -19,7 +19,7 @@ export function createNodejsEnv() {
         throw new Error('fetch - missing fetch implementation for nodejs environment');
     };
     var fileSystem = createFileSystem();
-    return tslib_1.__assign({ Canvas: Canvas || /** @class */ (function () {
+    return __assign({ Canvas: Canvas || /** @class */ (function () {
             function Canvas() {
             }
             return Canvas;

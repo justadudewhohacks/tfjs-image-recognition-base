@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __assign, __awaiter, __extends, __generator } from "tslib";
 import * as tf from '@tensorflow/tfjs-core';
 import { BoundingBox } from '../classes/BoundingBox';
 import { ObjectDetection } from '../classes/ObjectDetection';
@@ -16,7 +16,7 @@ import { extractParamsFromWeigthMap } from './extractParamsFromWeigthMap';
 import { leaky } from './leaky';
 import { TinyYolov2Options } from './TinyYolov2Options';
 var TinyYolov2 = /** @class */ (function (_super) {
-    tslib_1.__extends(TinyYolov2, _super);
+    __extends(TinyYolov2, _super);
     function TinyYolov2(config) {
         var _this = _super.call(this, 'TinyYolov2') || this;
         validateConfig(config);
@@ -98,9 +98,9 @@ var TinyYolov2 = /** @class */ (function (_super) {
         });
     };
     TinyYolov2.prototype.forward = function (input, inputSize) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var _a;
-            return tslib_1.__generator(this, function (_b) {
+            return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _a = this.forwardInput;
@@ -113,10 +113,10 @@ var TinyYolov2 = /** @class */ (function (_super) {
     };
     TinyYolov2.prototype.detect = function (input, forwardParams) {
         if (forwardParams === void 0) { forwardParams = {}; }
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var _a, inputSize, scoreThreshold, netInput, out, out0, inputDimensions, results, boxes, scores, classScores, classNames, indices, detections;
             var _this = this;
-            return tslib_1.__generator(this, function (_b) {
+            return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _a = new TinyYolov2Options(forwardParams), inputSize = _a.inputSize, scoreThreshold = _a.scoreThreshold;
@@ -164,10 +164,10 @@ var TinyYolov2 = /** @class */ (function (_super) {
         return extractParams(weights, this.config, this.boxEncodingSize, filterSizes);
     };
     TinyYolov2.prototype.extractBoxes = function (outputTensor, inputBlobDimensions, scoreThreshold) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var width, height, inputSize, correctionFactorX, correctionFactorY, numCells, numBoxes, _a, boxesTensor, scoresTensor, classScoresTensor, results, scoresData, boxesData, row, col, anchor, score, ctX, ctY, width_1, height_1, x, y, pos, _b, classScore, label, _c;
             var _this = this;
-            return tslib_1.__generator(this, function (_d) {
+            return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
                         width = inputBlobDimensions.width, height = inputBlobDimensions.height;
@@ -223,7 +223,7 @@ var TinyYolov2 = /** @class */ (function (_super) {
                         _d.label = 8;
                     case 8:
                         _b = _c, classScore = _b.classScore, label = _b.label;
-                        results.push(tslib_1.__assign({ box: new BoundingBox(x, y, x + width_1, y + height_1), score: score, classScore: score * classScore, label: label }, pos));
+                        results.push(__assign({ box: new BoundingBox(x, y, x + width_1, y + height_1), score: score, classScore: score * classScore, label: label }, pos));
                         _d.label = 9;
                     case 9:
                         anchor++;
@@ -244,9 +244,9 @@ var TinyYolov2 = /** @class */ (function (_super) {
         });
     };
     TinyYolov2.prototype.extractPredictedClass = function (classesTensor, pos) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var row, col, anchor, classesData;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         row = pos.row, col = pos.col, anchor = pos.anchor;

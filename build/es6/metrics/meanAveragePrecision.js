@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __assign } from "tslib";
 import { LabeledBox } from '../classes/LabeledBox';
 import { PredictedBox } from '../classes/PredictedBox';
 import { averagePrecision } from './averagePrecision';
@@ -52,7 +52,7 @@ export function meanAveragePrecision(inputs, iouThreshold, classScoreThreshold) 
     });
     var averagePrecisionsByClass = inputsByClass.map(function (_a) {
         var classLabel = _a.classLabel, inputs = _a.inputs;
-        return tslib_1.__assign({ classLabel: classLabel }, averagePrecision(inputs, iouThreshold));
+        return __assign({ classLabel: classLabel }, averagePrecision(inputs, iouThreshold));
     });
     return {
         meanAveragePrec: averagePrecisionsByClass

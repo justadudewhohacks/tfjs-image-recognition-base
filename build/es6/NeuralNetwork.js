@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __generator } from "tslib";
 import * as tf from '@tensorflow/tfjs-core';
 import { getModelUris } from './common/getModelUris';
 import { loadWeightMap } from './dom';
@@ -84,8 +84,8 @@ var NeuralNetwork = /** @class */ (function () {
             .reduce(function (flat, arr) { return flat.concat(arr); }));
     };
     NeuralNetwork.prototype.load = function (weightsOrUrl) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
-            return tslib_1.__generator(this, function (_a) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (weightsOrUrl instanceof Float32Array) {
@@ -101,9 +101,9 @@ var NeuralNetwork = /** @class */ (function () {
         });
     };
     NeuralNetwork.prototype.loadFromUri = function (uri) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var weightMap;
-            return tslib_1.__generator(this, function (_a) {
+            return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (uri && typeof uri !== 'string') {
@@ -119,9 +119,9 @@ var NeuralNetwork = /** @class */ (function () {
         });
     };
     NeuralNetwork.prototype.loadFromDisk = function (filePath) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, void 0, function () {
             var readFile, _a, manifestUri, modelBaseUri, fetchWeightsFromDisk, loadWeights, manifest, _b, _c, weightMap;
-            return tslib_1.__generator(this, function (_d) {
+            return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
                         if (filePath && typeof filePath !== 'string') {

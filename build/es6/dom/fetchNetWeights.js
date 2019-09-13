@@ -1,9 +1,9 @@
-import * as tslib_1 from "tslib";
+import { __awaiter, __generator } from "tslib";
 import { fetchOrThrow } from './fetchOrThrow';
 export function fetchNetWeights(uri) {
-    return tslib_1.__awaiter(this, void 0, void 0, function () {
+    return __awaiter(this, void 0, void 0, function () {
         var _a;
-        return tslib_1.__generator(this, function (_b) {
+        return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     _a = Float32Array.bind;

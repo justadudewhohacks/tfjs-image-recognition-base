@@ -1,8 +1,8 @@
-import * as tslib_1 from "tslib";
+import { __extends } from "tslib";
 import { isValidProbablitiy } from '../utils';
 import { LabeledBox } from './LabeledBox';
 var PredictedBox = /** @class */ (function (_super) {
-    tslib_1.__extends(PredictedBox, _super);
+    __extends(PredictedBox, _super);
     function PredictedBox(box, label, score, classScore) {
         var _this = _super.call(this, box, label) || this;
         _this._score = score;
