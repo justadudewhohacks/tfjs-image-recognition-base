@@ -17,6 +17,7 @@ module.exports = function(config) {
       'src/**/*.ts',
       'test/**/*.ts'
     ].concat(dataFiles),
+    exclude: ['test/env.node.ts'],
     preprocessors: {
       '**/*.ts': ['karma-typescript']
     },

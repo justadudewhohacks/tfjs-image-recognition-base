@@ -1,15 +1,15 @@
 import * as tf from '@tensorflow/tfjs-core';
 
 import { NetInput } from '../../src/dom/NetInput';
-import { loadImage } from '../env';
 import { expectAllTensorsReleased, fakeTensor3d } from '../utils';
+import { getTestEnv } from '../env';
 
 describe('NetInput', () => {
 
   let imgEl: HTMLImageElement
 
   beforeAll(async () => {
-    imgEl = await loadImage('test/img.png')
+    imgEl = await getTestEnv().loadImage('test/img.png')
   })
 
   describe('toBatchTensor', () => {

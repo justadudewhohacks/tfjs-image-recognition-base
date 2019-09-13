@@ -1,27 +1,19 @@
-import { env, fetchImage, fetchJson } from '../src';
+import { fetchImage, fetchJson } from '../src';
+import { TestEnv } from './Environment';
 
-export let fs: any, path: any, canvas: any
-
-if (env.isNodejs()) {
-  require('@tensorflow/tfjs-node')
-  fs = require('fs')
-  path = require('path')
-  canvas = require('canvas')
-
-  const { Canvas, Image } = canvas
-  env.monkeyPatch({ Canvas, Image })
+async function loadImageBrowser(uri: string): Promise<HTMLImageElement> {
+  return fetchImage(`base${uri.startsWith('/') ? '' : '/'}${uri}`)
 }
 
-export async function loadImage(uri: string): Promise<HTMLImageElement> {
-  if (!env.isNodejs()) {
-    return fetchImage(`base${uri.startsWith('/') ? '' : '/'}${uri}`)
-  }
-  return canvas.loadImage(path.resolve(__dirname, '../', uri))
+async function loadJsonBrowser<T>(uri: string): Promise<T> {
+  return fetchJson<T>(`base${uri.startsWith('/') ? '' : '/'}${uri}`)
 }
 
-export async function loadJson<T>(uri: string): Promise<T> {
-  if (!env.isNodejs()) {
-    return fetchJson<T>(`base${uri.startsWith('/') ? '' : '/'}${uri}`)
-  }
-  return JSON.parse(fs.readFileSync(path.resolve(__dirname, '../', uri)).toString())
+const browserTestEnv: TestEnv = {
+  loadImage: loadImageBrowser,
+  loadJson: loadJsonBrowser
+}
+
+export function getTestEnv(): TestEnv {
+  return global['nodeTestEnv'] || browserTestEnv
 }

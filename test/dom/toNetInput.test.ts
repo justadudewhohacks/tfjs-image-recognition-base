@@ -4,7 +4,7 @@ import { createCanvasFromMedia } from '../../src/dom/createCanvas';
 import { NetInput } from '../../src/dom/NetInput';
 import { toNetInput } from '../../src/dom/toNetInput';
 import { env } from '../../src/env';
-import { loadImage } from '../env';
+import { getTestEnv } from '../env';
 import { expectAllTensorsReleased } from '../utils';
 
 describe('toNetInput', () => {
@@ -12,7 +12,7 @@ describe('toNetInput', () => {
   let imgEl: HTMLImageElement, canvasEl: HTMLCanvasElement
 
   beforeAll(async () => {
-    imgEl = await loadImage('test/img.png')
+    imgEl = await getTestEnv().loadImage('test/img.png')
     canvasEl = createCanvasFromMedia(imgEl)
   })
 

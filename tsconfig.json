@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-
     "removeComments": false,
     "preserveConstEnums": true,
     "emitDecoratorMetadata": true,
@@ -14,6 +13,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "strictNullChecks": true,
     "importHelpers": true,
+    "skipLibCheck": true,
     "outDir": "build/commonjs",
     "module": "commonjs",
     "target": "es5",
