@@ -147,7 +147,7 @@ var NeuralNetwork = /** @class */ (function () {
         });
     };
     NeuralNetwork.prototype.loadFromWeightMap = function (weightMap) {
-        var _a = this.extractParamsFromWeigthMap(weightMap), paramMappings = _a.paramMappings, params = _a.params;
+        var _a = this.extractParamsFromWeightMap(weightMap), paramMappings = _a.paramMappings, params = _a.params;
         this._paramMappings = paramMappings;
         this._params = params;
     };

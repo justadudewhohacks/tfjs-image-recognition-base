@@ -12,7 +12,7 @@ import { validateConfig } from './config';
 import { convWithBatchNorm } from './convWithBatchNorm';
 import { depthwiseSeparableConv } from './depthwiseSeparableConv';
 import { extractParams } from './extractParams';
-import { extractParamsFromWeigthMap } from './extractParamsFromWeigthMap';
+import { extractParamsFromWeightMap } from './extractParamsFromWeightMap';
 import { leaky } from './leaky';
 import { TinyYolov2Options } from './TinyYolov2Options';
 var TinyYolov2 = /** @class */ (function (_super) {
@@ -152,8 +152,8 @@ var TinyYolov2 = /** @class */ (function (_super) {
     TinyYolov2.prototype.getDefaultModelName = function () {
         return '';
     };
-    TinyYolov2.prototype.extractParamsFromWeigthMap = function (weightMap) {
-        return extractParamsFromWeigthMap(weightMap, this.config);
+    TinyYolov2.prototype.extractParamsFromWeightMap = function (weightMap) {
+        return extractParamsFromWeightMap(weightMap, this.config);
     };
     TinyYolov2.prototype.extractParams = function (weights) {
         var filterSizes = this.config.filterSizes || TinyYolov2.DEFAULT_FILTER_SIZES;

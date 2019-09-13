@@ -27,7 +27,7 @@ function extractorsFactory(weightMap, paramMappings) {
         extractSeparableConvParams: extractSeparableConvParams
     };
 }
-function extractParamsFromWeigthMap(weightMap, config) {
+function extractParamsFromWeightMap(weightMap, config) {
     var paramMappings = [];
     var _a = extractorsFactory(weightMap, paramMappings), extractConvParams = _a.extractConvParams, extractConvWithBatchNormParams = _a.extractConvWithBatchNormParams, extractSeparableConvParams = _a.extractSeparableConvParams;
     var params;
@@ -61,5 +61,5 @@ function extractParamsFromWeigthMap(weightMap, config) {
     disposeUnusedWeightTensors_1.disposeUnusedWeightTensors(weightMap, paramMappings);
     return { params: params, paramMappings: paramMappings };
 }
-exports.extractParamsFromWeigthMap = extractParamsFromWeigthMap;
-//# sourceMappingURL=extractParamsFromWeigthMap.js.map
+exports.extractParamsFromWeightMap = extractParamsFromWeightMap;
+//# sourceMappingURL=extractParamsFromWeightMap.js.map
